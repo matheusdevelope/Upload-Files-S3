@@ -302,7 +302,8 @@ async function CreatePortLocal() {
 
 async function Exec() {
   try {
-    await VerifyUser();
+   // await VerifyUser();
+    server(process.env.PORT_UPLOAD_FILES_S3)
   } catch (e) {
     console.log(e);
   }

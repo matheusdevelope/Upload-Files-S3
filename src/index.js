@@ -111,7 +111,7 @@ app.get("/help", (req, res) =>
 app.post("/up_file_ftp", StartProcess);
 
 module.exports = (port) => {
-  app.listen(port || process.env.LOCAL_PORT || 3600, () => {
-    console.log(`Server on port ${port || process.env.LOCAL_PORT || 3600}.`);
+  app.listen(port || process.env.LOCAPORT_UPLOAD_FILES_S3L_PORT || 3600, () => {
+    console.log(`Server on port ${port || process.env.PORT_UPLOAD_FILES_S3 || 3600}.`);
   });
 };
