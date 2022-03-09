@@ -1,13 +1,13 @@
 //require("dotenv/config");
 const ftp = require("basic-ftp");
-const { normalize } = require("path");
+const { join } = require("path");
 const { GetConfig } = require("./config.js");
 
 async function DeleteOnFTP(connection, fileName) {
   const client = new ftp.Client();
   try {
     const config = await GetConfig();
-    const pathLocalFile = normalize(config.temp_dir + "\\" + fileName);
+    const pathLocalFile = join(config.temp_dir, fileName);
     const CREDENTIAL_FTP = {
       host: connection.host_ftp,
       user: connection.user_ftp,
@@ -29,7 +29,7 @@ async function DownloadoFromFTP(connection, fileName) {
   const client = new ftp.Client();
   try {
     const config = await GetConfig();
-    const pathLocalFile = normalize(config.temp_dir + "\\" + fileName);
+    const pathLocalFile = join(config.temp_dir, fileName);
     const CREDENTIAL_FTP = {
       host: connection.host_ftp,
       user: connection.user_ftp,
