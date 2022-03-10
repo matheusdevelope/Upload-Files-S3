@@ -40,6 +40,7 @@ async function StartProcess(req, res) {
         message:
           "Lista de paths dos arquivos baixados do FTP localmente retornou [empty]",
       });
+    if (!req.body.expiration) req.body.expiration = 30;
     const files = await UploadFiles(
       list_path_files_local,
       req.body.hash_size || 5,
