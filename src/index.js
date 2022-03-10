@@ -59,7 +59,7 @@ app.get("/help", (req, res) =>
           },
           expiration: {
             required: false,
-            default_value: 5,
+            default_value: 30,
             details:
               "This propertie set the value of days that file is available to download, after this time, we delete the file on cloud.",
             details2:
@@ -112,6 +112,8 @@ app.post("/up_file_ftp", StartProcess);
 
 module.exports = (port) => {
   app.listen(port || process.env.LOCAPORT_UPLOAD_FILES_S3L_PORT || 3600, () => {
-    console.log(`Server on port ${port || process.env.PORT_UPLOAD_FILES_S3 || 3600}.`);
+    console.log(
+      `Server on port ${port || process.env.PORT_UPLOAD_FILES_S3 || 3600}.`
+    );
   });
 };
