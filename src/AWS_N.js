@@ -43,7 +43,7 @@ async function StartProcess(req, res) {
     const files = await UploadFiles(
       list_path_files_local,
       req.body.hash_size || 5,
-      round(req.body.expiration, 5) || 5
+      round(req.body.expiration, 5) || 30
     );
     if (!files | (files.length <= 0))
       return error({
