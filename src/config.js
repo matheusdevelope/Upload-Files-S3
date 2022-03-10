@@ -8,19 +8,18 @@ const os = require("os");
 // };
 async function GetConfig() {
   try {
-    const  config   ={
-      port_local_server:process.env.PORT_UPLOAD_FILES_S3,
-      accessKeyId:process.env.ACESS_KEY_ID_AWS,
-      secretAccessKey:process.env.SECRET_KEY_AWS,
-      bucket:process.env.BUCKET_S3,
-      region:process.env.REGION_BUCKET,
-      temp_dir:os.tmpdir()
-   }
-   console.log(config)
+    const config = {
+      port_local_server: process.env.PORT_UPLOAD_FILES_S3,
+      accessKeyId: process.env.ACESS_KEY_ID_AWS,
+      secretAccessKey: process.env.SECRET_KEY_AWS,
+      bucket: process.env.BUCKET_S3,
+      region: process.env.REGION_BUCKET,
+      temp_dir: os.tmpdir(),
+    };
     // const config = await keytar.getPassword(name.service, name.acount);
     //console.log(config);
     //Config = JSON.parse(config);
-    if (config) return config //JSON.parse(config);
+    if (config) return config; //JSON.parse(config);
   } catch (e) {
     return Promise.reject(e);
   }
