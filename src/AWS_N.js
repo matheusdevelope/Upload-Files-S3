@@ -41,10 +41,12 @@ async function StartProcess(req, res) {
           "Lista de paths dos arquivos baixados do FTP localmente retornou [empty]",
       });
     if (!req.body.expiration) req.body.expiration = 30;
+    if (!req.body.hash_size) req.body.hash_size = 5;
     const files = await UploadFiles(
       list_path_files_local,
-      req.body.hash_size || 5,
-      round(req.body.expiration, 5) || 30
+      req.body.hash_size,
+      round(req.body.expiration, 5) || 30,
+      req.body.files
     );
     if (!files | (files.length <= 0))
       return error({
@@ -63,10 +65,18 @@ async function StartProcess(req, res) {
       };
     }
 
+    const message_encoded_URI = MountMessageEncoded(
+      req.body.header_message,
+      files,
+      req.body.hash_size,
+      req.body.foot_message
+    );
+
     retorno = {
       message: "Success!",
       data: {
         files: files,
+        message_encoded_URI: message_encoded_URI,
       },
       exceptions: "none",
     };
@@ -307,7 +317,7 @@ async function DownloadToLocalFromFTP(connection, files) {
     });
   return list_of_paths_local;
 }
-async function UploadFiles(list_paths_local, hash_size, expires) {
+async function UploadFiles(list_paths_local, hash_size, expires, req_files) {
   let erros = [];
   let files_with_link_download = [];
   for (let i = 0; i < list_paths_local.length; i++) {
@@ -320,6 +330,7 @@ async function UploadFiles(list_paths_local, hash_size, expires) {
       const ret = await UpFileAWS_S3(list_paths_local[i], name_file, expires);
       const file_with_link = {
         name: ret.Key,
+        description_name: req_files[i].description_name || "",
         url: ret.Location,
         expiration: expires,
       };
@@ -418,6 +429,28 @@ function round(n, multiplicador) {
   let a = Math.round(Number(value) / multiplicador) * multiplicador;
   if (a < 5) a = 5;
   return a;
+}
+function EncodeURI(text) {
+  return encodeURIComponent(text).replace(/%/gm, "%%");
+}
+function OnlyNameDescription(name, sizeHash) {
+  let newName = name.split(".").shift();
+  newName = newName.substring(0, newName.length - (sizeHash + 4));
+  newName = newName.replace(/_/gm, " ");
+  return newName;
+}
+function MountMessageEncoded(message, files, sizeHash, foot_message) {
+  let NewMessage = message || "";
+  NewMessage += "\n\n";
+  files.forEach((obj, i) => {
+    const description =
+      obj.description_name ||
+      OnlyNameDescription(obj.name, sizeHash) ||
+      "Link " + (i + 1);
+    NewMessage += "-" + description + ":\n" + obj.url + "\n\n";
+  });
+  if (foot_message) NewMessage += "\n" + foot_message;
+  return EncodeURI(NewMessage);
 }
 
 module.exports = {
