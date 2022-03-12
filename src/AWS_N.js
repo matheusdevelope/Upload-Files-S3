@@ -69,7 +69,7 @@ async function StartProcess(req, res) {
       req.body.header_message,
       files,
       req.body.hash_size,
-      req.body.foot_message
+      req.body.footer_message
     );
 
     retorno = {
@@ -439,7 +439,7 @@ function OnlyNameDescription(name, sizeHash) {
   newName = newName.replace(/_/gm, " ");
   return newName;
 }
-function MountMessageEncoded(message, files, sizeHash, foot_message) {
+function MountMessageEncoded(message, files, sizeHash, footer_message) {
   let NewMessage = message || "";
   NewMessage += "\n\n";
   files.forEach((obj, i) => {
@@ -449,7 +449,7 @@ function MountMessageEncoded(message, files, sizeHash, foot_message) {
       "Link " + (i + 1);
     NewMessage += "-" + description + ":\n" + obj.url + "\n\n";
   });
-  if (foot_message) NewMessage += "\n" + foot_message;
+  if (footer_message) NewMessage += "\n" + footer_message;
   return EncodeURI(NewMessage);
 }
 
