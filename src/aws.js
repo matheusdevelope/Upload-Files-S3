@@ -441,7 +441,7 @@ function OnlyNameDescription(name, sizeHash) {
 function MountMessageEncoded(message, files, sizeHash, footer_message) {
   let NewMessage = message || "";
   NewMessage = NewMessage.replace(/\[n\]/gm, "\n");
-  if (NewMessage > 0) NewMessage += "\n\n";
+  if (NewMessage.length > 0) NewMessage += "\n\n";
 
   files.forEach((obj, i) => {
     const description =
