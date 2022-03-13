@@ -1,6 +1,5 @@
-if (process.env.ENV === "dev") {
-  require("dotenv/config");
-}
+require("dotenv/config");
+
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -130,6 +129,6 @@ app.get("/help", (req, res) =>
 );
 app.post("/up_file_ftp", StartProcess);
 
-app.listen(process.env.LOCAPORT_UPLOAD_FILES_S3L_PORT || 3600, () => {
+app.listen(process.env.PORT_UPLOAD_FILES_S3 || 3600, () => {
   console.log(`Server on port ${process.env.PORT_UPLOAD_FILES_S3 || 3600}.`);
 });
