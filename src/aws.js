@@ -1,4 +1,3 @@
-//require("dotenv/config");
 const FTP = require("./FTP.js");
 const fs = require("fs");
 const aws = require("aws-sdk");
@@ -441,7 +440,9 @@ function OnlyNameDescription(name, sizeHash) {
 }
 function MountMessageEncoded(message, files, sizeHash, footer_message) {
   let NewMessage = message || "";
-  NewMessage += "\n\n";
+  NewMessage = NewMessage.replace(/\[n\]/gm, "\n");
+  if (NewMessage > 0) NewMessage += "\n\n";
+
   files.forEach((obj, i) => {
     const description =
       obj.description_name ||
@@ -449,7 +450,11 @@ function MountMessageEncoded(message, files, sizeHash, footer_message) {
       "Link " + (i + 1);
     NewMessage += "-" + description + ":\n" + obj.url + "\n\n";
   });
-  if (footer_message) NewMessage += "\n" + footer_message;
+  if (footer_message) {
+    const footer = footer_message.replace(/\[n\]/gm, "\n");
+    NewMessage += "\n" + footer;
+  }
+
   return EncodeURI(NewMessage);
 }
 

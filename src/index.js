@@ -1,8 +1,10 @@
-//require("dotenv/config");
+if (process.env.ENV === "dev") {
+  require("dotenv/config");
+}
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const { StartProcess } = require("./AWS_N.js");
+const { StartProcess } = require("./aws.js");
 
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
@@ -36,8 +38,12 @@ app.get("/help", (req, res) =>
           },
           hash_size: 5,
           expiration: 5,
+          header_message:
+            "This allow to add a custom message on top of message generate with the descriptions and links in URI Encode format",
+          footer_message:
+            "This allow to add a custom message on bottom of message generate with the  descriptions and links in URI Encode format",
         },
-        requite_values: {
+        requisited_values: {
           files: [
             {
               name: "The name needs a extension. If you dont provide it will throw a error on request. ",
@@ -71,6 +77,18 @@ app.get("/help", (req, res) =>
             details:
               "Thats allow the API to delete the file after the upload success. If we cant delete the file, it will send a propertie [exception] to alert you about the failed on delete.",
           },
+          header_message: {
+            required: false,
+            defalt_value: "",
+            details:
+              "to send line breaks in the message you can type ' n' (without space) or '[n]', then we convert to a line break. ",
+          },
+          footer_message: {
+            required: false,
+            defalt_value: "",
+            details:
+              "to send line breaks in the message you can type ' n' (without space) or '[n]', then we convert to a line break. ",
+          },
         },
         return_values: {
           on_success: {
@@ -83,6 +101,8 @@ app.get("/help", (req, res) =>
                   expiration: 5,
                 },
               ],
+              message_encoded_URI:
+                "%%20Test%%20with%%20simbol%%20of%%20%%25%%0A%%0Ahave%%20a%%20line%%20de%%20Break!%%0A%%0A-Name%%20of%%20File%%3A%%0Ahttps%%3A%%2F%%2Fyour-host.com%%2FYour-File.pdf%%0A%%0A",
             },
             exceptions: "none",
           },
@@ -110,10 +130,6 @@ app.get("/help", (req, res) =>
 );
 app.post("/up_file_ftp", StartProcess);
 
-module.exports = (port) => {
-  app.listen(port || process.env.LOCAPORT_UPLOAD_FILES_S3L_PORT || 3600, () => {
-    console.log(
-      `Server on port ${port || process.env.PORT_UPLOAD_FILES_S3 || 3600}.`
-    );
-  });
-};
+app.listen(process.env.LOCAPORT_UPLOAD_FILES_S3L_PORT || 3600, () => {
+  console.log(`Server on port ${process.env.PORT_UPLOAD_FILES_S3 || 3600}.`);
+});
