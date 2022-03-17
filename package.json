@@ -9,7 +9,8 @@
     "aws-sdk": "^2.1088.0",
     "basic-ftp": "^4.6.6",
     "cors": "^2.8.5",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "mime-types": "^2.1.35"
   },
   "devDependencies": {
     "dotenv": "^16.0.0",

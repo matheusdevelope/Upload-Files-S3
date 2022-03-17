@@ -1,6 +1,5 @@
-if (process.env.ENV) {
-  require("dotenv/config");
-}
+require("dotenv/config");
+
 const os = require("os");
 
 const ENV = process.env;

@@ -2,6 +2,8 @@ const FTP = require("./FTP.js");
 const fs = require("fs");
 const aws = require("aws-sdk");
 const path = require("path");
+const mime = require("mime-types");
+
 const { GetConfig } = require("./config.js");
 let BUCKET;
 GetConfig().then((config) => {
@@ -15,6 +17,7 @@ GetConfig().then((config) => {
 });
 
 async function StartProcess(req, res) {
+  // console.log("BODY::::::", req.body);
   let retorno = {
     message:
       "Humm... não houveram erros de validação porém nenhum resultado foi retornado. Acho que ruim kkkkk",
@@ -354,13 +357,14 @@ async function UploadFiles(list_paths_local, hash_size, expires, req_files) {
 async function UpFileAWS_S3(path_local, key, expires) {
   const s3 = new aws.S3();
   const fileStream = fs.createReadStream(path_local);
-
+  const type = mime.contentType(path.extname(path_local));
   const uploadParams = {
     Bucket: BUCKET,
     Key: key,
     Body: fileStream,
     ACL: "public-read",
     Tagging: "expires=" + expires,
+    ContentType: type || "application/pdf",
   };
   const RetornoS3 = await s3
     .upload(uploadParams, function (err, data) {
