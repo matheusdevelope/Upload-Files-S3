@@ -36,7 +36,7 @@ async function DownloadoFromFTP(connection, fileName) {
     };
 
     let pathFTPFile = connection.path_of_files + fileName;
-    pathFTPFile = pathFTPFile.replace(/%20/gm, " ");
+
     await client.access(CREDENTIAL_FTP);
     await client.downloadTo(pathLocalFile, pathFTPFile);
 

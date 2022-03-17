@@ -5,6 +5,7 @@ const path = require("path");
 const mime = require("mime-types");
 
 const { GetConfig } = require("./config.js");
+const { Convert_Especial_Caracteres_in_Unicod_To_UTF8 } = require("./utils.js");
 let BUCKET;
 GetConfig().then((config) => {
   BUCKET = process.env.BUCKET || config.bucket;
@@ -28,6 +29,7 @@ async function StartProcess(req, res) {
   try {
     await ValidateRequisition(req.body);
     const list_name_files = await CreateListNames(req.body.files);
+    console.log(list_name_files);
     if (!list_name_files | (list_name_files.length <= 0))
       return error({
         message:
@@ -253,7 +255,7 @@ async function CreateListNames(files) {
   let list = [];
   try {
     files.forEach((file) => {
-      list.push(file.name);
+      list.push(Convert_Especial_Caracteres_in_Unicod_To_UTF8(file.name));
     });
   } catch (e) {
     return error({
