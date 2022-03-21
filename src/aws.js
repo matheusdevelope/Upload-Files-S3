@@ -18,7 +18,6 @@ GetConfig().then((config) => {
 });
 
 async function StartProcess(req, res) {
-  // console.log("BODY::::::", req.body);
   let retorno = {
     message:
       "Humm... não houveram erros de validação porém nenhum resultado foi retornado. Acho que ruim kkkkk",
@@ -29,7 +28,6 @@ async function StartProcess(req, res) {
   try {
     await ValidateRequisition(req.body);
     const list_name_files = await CreateListNames(req.body.files);
-    console.log(list_name_files);
     if (!list_name_files | (list_name_files.length <= 0))
       return error({
         message:
@@ -88,8 +86,9 @@ async function StartProcess(req, res) {
     return res.status(400).json(e);
   }
   res.json(retorno);
+  console.log(req.body.header_message);
   retorno.requester = req.body.requester;
-  console.log("Request API: " + new Date(), retorno);
+  //console.log("Request API: " + new Date(), retorno);
   DeleteTempFileLocal(list_path_files_local);
   return;
 }

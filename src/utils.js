@@ -1,54 +1,54 @@
 //utilities
 const MapRegex = {
-  á: /u00e1/g,
-  à: /u00e0/g,
-  â: /u00e2/g,
-  ã: /u00e3/g,
-  ä: /u00e4/g,
-  Á: /u00c1/g,
-  À: /u00c0/g,
-  Â: /u00c2/g,
-  Ã: /u00c3/g,
-  Ä: /u00c4/g,
-  é: /u00e9/g,
-  è: /u00e8/g,
-  ê: /u00ea/g,
-  ê: /u00ea/g,
-  É: /u00c9/g,
-  È: /u00c8/g,
-  Ê: /u00ca/g,
-  Ë: /u00cb/g,
-  í: /u00ed/g,
-  ì: /u00ec/g,
-  î: /u00ee/g,
-  ï: /u00ef/g,
-  Í: /u00cd/g,
-  Ì: /u00cc/g,
-  Î: /u00ce/g,
-  Ï: /u00cf/g,
-  ó: /u00f3/g,
-  ò: /u00f2/g,
-  ô: /u00f4/g,
-  õ: /u00f5/g,
-  ö: /u00f6/g,
-  Ó: /u00d3/g,
-  Ò: /u00d2/g,
-  Ô: /u00d4/g,
-  Õ: /u00d5/g,
-  Ö: /u00d6/g,
-  ú: /u00fa/g,
-  ù: /u00f9/g,
-  û: /u00fb/g,
-  ü: /u00fc/g,
-  Ú: /u00da/g,
-  Ù: /u00d9/g,
-  Û: /u00db/g,
-  ç: /u00E7/g,
-  Ç: /u00c7/g,
-  ñ: /u00f1/g,
-  Ñ: /u00d1/g,
-  "&": /u0026/g,
-  "'": /u0027/g,
+  á: "u00e1",
+  à: "u00e0",
+  â: "u00e2",
+  ã: "u00e3",
+  ä: "u00e4",
+  Á: "u00c1",
+  À: "u00c0",
+  Â: "u00c2",
+  Ã: "u00c3",
+  Ä: "u00c4",
+  é: "u00e9",
+  è: "u00e8",
+  ê: "u00ea",
+  ê: "u00ea",
+  É: "u00c9",
+  È: "u00c8",
+  Ê: "u00ca",
+  Ë: "u00cb",
+  í: "u00ed",
+  ì: "u00ec",
+  î: "u00ee",
+  ï: "u00ef",
+  Í: "u00cd",
+  Ì: "u00cc",
+  Î: "u00ce",
+  Ï: "u00cf",
+  ó: "u00f3",
+  ò: "u00f2",
+  ô: "u00f4",
+  õ: "u00f5",
+  ö: "u00f6",
+  Ó: "u00d3",
+  Ò: "u00d2",
+  Ô: "u00d4",
+  Õ: "u00d5",
+  Ö: "u00d6",
+  ú: "u00fa",
+  ù: "u00f9",
+  û: "u00fb",
+  ü: "u00fc",
+  Ú: "u00da",
+  Ù: "u00d9",
+  Û: "u00db",
+  ç: "u00e7",
+  Ç: "u00c7",
+  ñ: "u00f1",
+  Ñ: "u00d1",
+  "&": "u0026",
+  "'": "u0027",
 };
 
 function error(e) {
@@ -104,7 +104,16 @@ function MountMessageEncoded(message, files, sizeHash, footer_message) {
 function Convert_Especial_Caracteres_in_Unicod_To_UTF8(value) {
   let string = value;
   for (let props in MapRegex) {
-    string = string.replace(MapRegex[props], props);
+    let regex = MapRegex[props];
+    regex = new RegExp(regex, "g");
+    string = string.replace(regex, props);
+  }
+
+  for (let props in MapRegex) {
+    let regex = MapRegex[props];
+    regex = regex.toUpperCase().replace("U", "u").replace("G", "g");
+    regex = new RegExp(regex, "g");
+    string = string.replace(regex, props);
   }
   string = string.replace(/%20/gm, " ");
   return string;
