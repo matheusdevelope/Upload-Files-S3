@@ -25,3 +25,11 @@ errors.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+.idea/
+.vscode/
+node_modules/
+build/
+tmp/
+temp/

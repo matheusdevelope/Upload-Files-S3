@@ -1,0 +1,9 @@
+services:
+  db:
+    container_name: database-mssql
+    image: mcr.microsoft.com/mssql/server:2019-CU15-ubuntu-20.04
+    environment:
+      - SA_PASSWORD=Abc123..
+      - ACCEPT_EULA=Y
+    ports:
+      - "5434:1433"
