@@ -55,7 +55,7 @@ async function StartProcess(req, res) {
         message: "Lista dos arquivos enviado para a nuvem retornou [empty]",
       });
 
-    if (req.body.ftp.delete_files) {
+    if (req.body.ftp.delete_files === true) {
       const deleted_files = await DeleteFilesOnFTP(
         req.body.ftp,
         list_name_files
@@ -438,7 +438,7 @@ function EncodeURI(text) {
 }
 function OnlyNameDescription(name, sizeHash) {
   let newName = name.split(".").shift();
-  newName = newName.substring(0, newName.length - (sizeHash + 4));
+  newName = newName.substring(0, newName.length - (sizeHash + 3));
   newName = newName.replace(/_/gm, " ");
   return newName;
 }
