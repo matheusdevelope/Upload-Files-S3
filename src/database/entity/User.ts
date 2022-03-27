@@ -6,14 +6,14 @@ export class User {
   id: string;
 
   @Column()
-  user: string;
+  cnpj: string;
 
   @Column()
-  pass: string;
+  name: string;
 
   @Column()
-  name: number;
+  expiration_files: number;
 
   @Column()
-  access: number;
+  allow_access: boolean;
 }
