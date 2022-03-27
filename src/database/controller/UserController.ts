@@ -11,6 +11,9 @@ export class UserController {
         message: "This CNPJ already exists",
       });
   }
+  async Auth(cnpj: string) {
+    return this.userRepository.findOneBy({ cnpj });
+  }
 
   async all(request: Request, response: Response, next: NextFunction) {
     return this.userRepository.find();

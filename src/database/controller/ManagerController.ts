@@ -2,16 +2,52 @@ import { NextFunction, Request, Response } from "express";
 import { Manager } from "../entity/Manager";
 import { AppDataSource } from "../data-source";
 import { v4 as UUID } from "uuid";
-
-function HandleError(func: any) {
-  try {
-    return func();
-  } catch (e) {}
+import * as jwt from "jsonwebtoken";
+import Config from "../../configs";
+function generateToken(id: string) {
+  console.log("aqui");
+  return jwt.sign({ id }, Config.SECRET_JWT, {
+    expiresIn: 60 * 60, //one hour
+  });
 }
-
 export class ManagerController {
   private ManagerRepository = AppDataSource.getRepository(Manager);
 
+  async login(req: Request, res: Response, next: NextFunction) {
+    const { user, pass } = req.body;
+    if (!user || !pass) return Promise.reject({ error: "Body empty" });
+
+    let Manager = await this.ManagerRepository.findOneBy({ user });
+
+    //verify if exist a user
+    if (!Manager) {
+      return Promise.reject({ error: "User not Found" });
+    }
+    //verify the pass of user founded
+    if (Manager.pass.toString() !== pass.toString()) {
+      return Promise.reject({ error: "Invalid Password" });
+    }
+    //return the user
+    delete Manager.pass;
+    const DataToReturn = {
+      data: Manager,
+      token: generateToken(Manager.id),
+    };
+
+    return Promise.resolve(DataToReturn);
+  }
+
+  async FirstManager() {
+    if ((await this.ManagerRepository.find()).length === 0) {
+      await this.ManagerRepository.save({
+        id: UUID(),
+        user: "adm",
+        pass: "adm",
+        access: 0,
+        name: "Administrator",
+      });
+    }
+  }
   async Exists(user: string) {
     const manager = await this.ManagerRepository.findOneBy({
       user: user,

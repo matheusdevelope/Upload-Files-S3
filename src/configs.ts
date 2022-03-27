@@ -7,6 +7,7 @@ interface IConfig {
   DB_USER: string;
   DB_PASS: string;
   PORT: number;
+  SECRET_JWT: string;
 }
 const Config: IConfig = {
   DB_PORT: Number(process.env.DB_PORT),
@@ -15,5 +16,6 @@ const Config: IConfig = {
   DB_USER: process.env.DB_USER,
   DB_PASS: process.env.DB_PASS,
   PORT: Number(process.env.PORT),
+  SECRET_JWT: "teste",
 };
 export default Config;

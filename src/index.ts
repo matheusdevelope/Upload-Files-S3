@@ -6,6 +6,8 @@ import { Request, Response } from "express";
 import { AppDataSource } from "./database/data-source";
 import { Routes } from "./routes";
 import Config from "./configs";
+import Middleware from "./middleware";
+import { ManagerController } from "./database/controller/ManagerController";
 
 const PORT = Config.PORT;
 
@@ -15,7 +17,7 @@ AppDataSource.initialize()
     const app = express();
     app.use(bodyParser.json());
     app.use(cors());
-
+    app.use(Middleware);
     // register express routes from defined application routes
     Routes.forEach((route) => {
       (app as any)[route.method](
@@ -49,6 +51,8 @@ AppDataSource.initialize()
         }
       );
     });
+
+    await new ManagerController().FirstManager();
 
     app.listen(PORT | 3000, () => {
       console.log(

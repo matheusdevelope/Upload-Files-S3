@@ -22,6 +22,12 @@ const Manager = [
     action: "save",
   },
   {
+    method: "post",
+    route: "/manager/login",
+    controller: ManagerController,
+    action: "login",
+  },
+  {
     method: "put",
     route: "/manager/:id",
     controller: ManagerController,
