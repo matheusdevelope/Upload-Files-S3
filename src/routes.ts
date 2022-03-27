@@ -1,6 +1,32 @@
 import { UserController } from "./database/controller/UserController";
 
-export const Routes = [
+const Manager = [
+  {
+    method: "get",
+    route: "/manager",
+    controller: UserController,
+    action: "all",
+  },
+  {
+    method: "get",
+    route: "/manager/:id",
+    controller: UserController,
+    action: "one",
+  },
+  {
+    method: "post",
+    route: "/manager",
+    controller: UserController,
+    action: "save",
+  },
+  {
+    method: "delete",
+    route: "/manager/:id",
+    controller: UserController,
+    action: "remove",
+  },
+];
+const User = [
   {
     method: "get",
     route: "/users",
@@ -26,3 +52,5 @@ export const Routes = [
     action: "remove",
   },
 ];
+
+export const Routes = [...Manager, ...User];

@@ -24,7 +24,8 @@
     "mime-types": "^2.1.35",
     "mssql": "^4.0.4",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "0.3.3"
+    "typeorm": "0.3.3",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/node": "^17.0.23",

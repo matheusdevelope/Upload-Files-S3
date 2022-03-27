@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { User } from "../entity/User";
+import { Manager } from "../entity/Manager";
 import { AppDataSource } from "../data-source";
 import { v4 as UUID } from "uuid";
-export class UserController {
-  private userRepository = AppDataSource.getRepository(User);
+export class ManagerController {
+  private userRepository = AppDataSource.getRepository(Manager);
 
   async all(request: Request, response: Response, next: NextFunction) {
     return this.userRepository.find();
