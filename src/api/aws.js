@@ -83,14 +83,13 @@ async function StartProcess(req, res) {
       exceptions: "none",
     };
   } catch (e) {
-    return res.status(400).json(e);
+    return Promise.reject(e);
   }
-  res.json(retorno);
-  console.log(req.body.header_message);
+
   retorno.requester = req.body.requester;
-  //console.log("Request API: " + new Date(), retorno);
+  console.log("Request API: " + new Date(), retorno);
   DeleteTempFileLocal(list_path_files_local);
-  return;
+  return retorno;
 }
 async function ValidateRequisition(body) {
   let errors = [];
