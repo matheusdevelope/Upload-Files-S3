@@ -16,19 +16,30 @@ AppDataSource.initialize()
       (app as any)[route.method](
         route.route,
         (req: Request, res: Response, next: Function) => {
-          const result = new (route.controller as any)()[route.action](
-            req,
-            res,
-            next
-          );
-          if (result instanceof Promise) {
-            result.then((result) =>
-              result !== null && result !== undefined
-                ? res.send(result)
-                : undefined
+          try {
+            const result = new (route.controller as any)()[route.action](
+              req,
+              res,
+              next
             );
-          } else if (result !== null && result !== undefined) {
-            res.json(result);
+
+            if (result instanceof Promise) {
+              result
+                .then((result) => {
+                  result !== null && result !== undefined
+                    ? res.send(result)
+                    : undefined;
+                })
+                .catch((e) => {
+                  res.status(400).json(e);
+                });
+            } else if (result instanceof Error) {
+              res.json({ error: result, message: "Algo Deu Errado" });
+            } else if (result !== null && result !== undefined) {
+              res.json(result);
+            }
+          } catch (e) {
+            res.json({ error: e, message: "Algo Deu Errado" });
           }
         }
       );

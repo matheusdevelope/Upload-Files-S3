@@ -1,28 +1,35 @@
+import { ManagerController } from "./database/controller/ManagerController";
 import { UserController } from "./database/controller/UserController";
 
 const Manager = [
   {
     method: "get",
     route: "/manager",
-    controller: UserController,
+    controller: ManagerController,
     action: "all",
   },
   {
     method: "get",
     route: "/manager/:id",
-    controller: UserController,
+    controller: ManagerController,
     action: "one",
   },
   {
     method: "post",
     route: "/manager",
-    controller: UserController,
+    controller: ManagerController,
     action: "save",
+  },
+  {
+    method: "put",
+    route: "/manager/:id",
+    controller: ManagerController,
+    action: "update",
   },
   {
     method: "delete",
     route: "/manager/:id",
-    controller: UserController,
+    controller: ManagerController,
     action: "remove",
   },
 ];
@@ -44,6 +51,12 @@ const User = [
     route: "/users",
     controller: UserController,
     action: "save",
+  },
+  {
+    method: "put",
+    route: "/manager/:id",
+    controller: UserController,
+    action: "update",
   },
   {
     method: "delete",

@@ -5,14 +5,16 @@ export class Manager {
   @PrimaryColumn()
   id: string;
 
-  @Column()
+  @Column({
+    unique: true,
+  })
   user: string;
 
   @Column()
   pass: string;
 
   @Column()
-  name: number;
+  name: string;
 
   @Column()
   access: number;
