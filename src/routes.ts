@@ -36,31 +36,31 @@ const Manager = [
 const User = [
   {
     method: "get",
-    route: "/users",
+    route: "/user",
     controller: UserController,
     action: "all",
   },
   {
     method: "get",
-    route: "/users/:id",
+    route: "/user/:id",
     controller: UserController,
     action: "one",
   },
   {
     method: "post",
-    route: "/users",
+    route: "/user",
     controller: UserController,
     action: "save",
   },
   {
     method: "put",
-    route: "/manager/:id",
+    route: "/user/:id",
     controller: UserController,
     action: "update",
   },
   {
     method: "delete",
-    route: "/users/:id",
+    route: "/user/:id",
     controller: UserController,
     action: "remove",
   },

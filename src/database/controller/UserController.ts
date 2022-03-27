@@ -8,7 +8,7 @@ export class UserController {
     const user = await this.userRepository.findOneBy({ cnpj });
     if (user)
       return Promise.reject({
-        message: "This user already exists",
+        message: "This CNPJ already exists",
       });
   }
 
@@ -26,7 +26,7 @@ export class UserController {
 
   async save(request: Request, response: Response, next: NextFunction) {
     try {
-      await this.Exists(request.body.user);
+      await this.Exists(request.body.cnpj);
       request.body.id = UUID();
       return this.userRepository.save(request.body);
     } catch (e) {
