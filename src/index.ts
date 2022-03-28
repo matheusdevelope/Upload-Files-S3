@@ -38,6 +38,7 @@ AppDataSource.initialize()
                     : undefined;
                 })
                 .catch((e) => {
+                  console.log(e);
                   res.status(400).json(e);
                 });
             } else if (result instanceof Error) {
@@ -46,6 +47,7 @@ AppDataSource.initialize()
               res.json(result);
             }
           } catch (e) {
+            console.log(e);
             res.status(400).json({ error: e, message: "Algo Deu Errado" });
           }
         }

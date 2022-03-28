@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryColumn } from "typeorm";
+import { Entity, Column, PrimaryColumn, OneToMany } from "typeorm";
+import { FTP } from "./FTP";
 
 @Entity()
 export class User {
@@ -16,4 +17,10 @@ export class User {
 
   @Column()
   allow_access: boolean;
+
+  @OneToMany(() => FTP, (ftp) => ftp.userId, {
+    onDelete: "CASCADE",
+    cascade: true,
+  })
+  ftp: FTP[];
 }

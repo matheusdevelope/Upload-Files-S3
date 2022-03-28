@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { User } from "../entity/User";
 import { AppDataSource } from "../data-source";
 import { v4 as UUID } from "uuid";
+import { FTP } from "../entity/FTP";
 export class UserController {
   private userRepository = AppDataSource.getRepository(User);
   async Exists(cnpj: string) {
@@ -16,15 +17,18 @@ export class UserController {
   }
 
   async all(request: Request, response: Response, next: NextFunction) {
-    return this.userRepository.find();
+    return this.userRepository.find({ relations: ["ftp"] });
   }
 
   async one(request: Request, response: Response, next: NextFunction) {
-    const user = await this.userRepository.findOneBy({
-      id: request.params.id,
+    const user = await this.userRepository.find({
+      where: {
+        id: request.params.id,
+      },
+      relations: ["ftp"],
     });
     if (!user) return Promise.reject({ message: "User not found" });
-    return Promise.resolve(user);
+    return Promise.resolve(user[0]);
   }
 
   async save(request: Request, response: Response, next: NextFunction) {
@@ -50,6 +54,31 @@ export class UserController {
         return Promise.reject({
           message: "This CNPJ is already in use, try another.",
         });
+
+      if (request.body.ftp.length > 0) {
+        const ftp = AppDataSource.getRepository(FTP);
+        for (let i = 0; i < request.body.ftp.length; i++) {
+          let bodyFTP = request.body.ftp[i];
+          console.log("THE FTP", request.body.ftp[i]);
+          await ftp.update(
+            {
+              id: request.body.ftp[i].id,
+            },
+            {
+              host: bodyFTP.host,
+              user: bodyFTP.user,
+              pass: bodyFTP.pass,
+              port: Number(bodyFTP.port),
+              path: bodyFTP.path,
+              deleteFiles: bodyFTP.deleteFiles,
+              order: bodyFTP.order,
+            }
+          );
+        }
+      }
+      delete request.body.ftp;
+      console.log(request.body);
+
       return this.userRepository.update(
         {
           id: request.params.id,
@@ -57,6 +86,7 @@ export class UserController {
         request.body
       );
     } catch (e) {
+      console.log(e);
       return Promise.reject(e);
     }
   }
