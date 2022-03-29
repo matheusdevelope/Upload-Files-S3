@@ -18,12 +18,13 @@ AppDataSource.initialize()
     const app = express();
     app.use(bodyParser.json());
     app.use(cors());
-    app.use(express.static(resolve(__dirname, "../Client/public")));
+    app.use(express.static(resolve("../Client/public")));
 
-    app.get("*", (req, res) => {
+    app.get("/", (req, res) => {
       res.sendFile(resolve("../Client/public", "index.html"));
     });
-    //  app.use(Middleware);
+
+    app.use(Middleware);
     // register express routes from defined application routes
 
     Routes.forEach((route) => {

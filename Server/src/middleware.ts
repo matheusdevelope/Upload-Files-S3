@@ -9,11 +9,7 @@ export default async function Middleware(
   next: NextFunction
 ) {
   ///exclude this routes from check of token
-  if (
-    req.originalUrl === "/" ||
-    req.originalUrl === "/help" ||
-    req.originalUrl === "/manager/login"
-  )
+  if (req.originalUrl === "/api/help" || req.originalUrl === "/manager/login")
     return next();
 
   //check if the user can access the api by requester property on body
