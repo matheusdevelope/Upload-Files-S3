@@ -8,6 +8,7 @@ import { Routes } from "./routes";
 import Config from "./configs";
 import Middleware from "./middleware";
 import { ManagerController } from "./database/controller/ManagerController";
+import { resolve } from "path";
 
 const PORT = Config.PORT;
 
@@ -17,8 +18,14 @@ AppDataSource.initialize()
     const app = express();
     app.use(bodyParser.json());
     app.use(cors());
-    app.use(Middleware);
+    app.use(express.static(resolve(__dirname, "../Client/public")));
+
+    app.get("*", (req, res) => {
+      res.sendFile(resolve("../Client/public", "index.html"));
+    });
+    //  app.use(Middleware);
     // register express routes from defined application routes
+
     Routes.forEach((route) => {
       (app as any)[route.method](
         route.route,

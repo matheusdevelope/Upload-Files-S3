@@ -199,12 +199,12 @@ class EntryPoint {
 }
 
 export const Routes = [
-  {
-    method: "get",
-    route: "/",
-    controller: EntryPoint,
-    action: "entry",
-  },
+  // {
+  //   method: "get",
+  //   route: "/",
+  //   controller: EntryPoint,
+  //   action: "entry",
+  // },
   {
     method: "get",
     route: "/help",
