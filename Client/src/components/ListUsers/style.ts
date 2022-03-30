@@ -17,6 +17,9 @@ export const Tittles = styled.div`
   width: 100%;
   border-bottom: 1px #000 solid;
   p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     flex: 1;
     border-right: #ddd 1px solid;
     padding: 0 8px;
@@ -25,10 +28,13 @@ export const Tittles = styled.div`
 export const LineUser = styled.div`
   display: flex;
   width: 100%;
-  height: 30px;
+  min-height: 30px;
   border-bottom: 1px #ddd solid;
   p,
   input {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin: auto;
     flex: 1;
     padding: 0 8px;
