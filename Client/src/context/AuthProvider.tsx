@@ -1,11 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
-import { HolesUserLogin } from "../types/UserLogin";
-interface IUserLogin {
-  user: string;
-  pass: string;
-  access: HolesUserLogin;
-  logged: boolean;
-}
+import { HolesUserLogin, IUserLogin } from "../types/UserLogin";
+
 interface IContext {
   user: IUserLogin | undefined;
   setUser: (user: IUserLogin) => void;

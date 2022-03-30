@@ -24,9 +24,13 @@ function Login() {
           try {
             const retUser = await useLogin(user);
             State?.setUser(retUser);
+            console.log("aqui");
             navigate("/home");
-          } catch (e) {
-            alert("Erro ao fazer login" + JSON.stringify(e));
+            return;
+          } catch (e: any) {
+            setLoading(false);
+            alert("Falha no login: " + JSON.stringify(e.data.message));
+            return;
           }
 
           setLoading(false);
@@ -35,6 +39,7 @@ function Login() {
         <label htmlFor="user">
           Usuário
           <input
+            autoFocus
             type="text"
             name="user"
             value={userInput}

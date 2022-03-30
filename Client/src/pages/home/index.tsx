@@ -1,21 +1,24 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import FormUser from "../../components/FormUser";
 import ListUser from "../../components/ListUsers";
 import { IUser } from "../../types/User";
 import * as C from "./style";
 import HeaderApp from "../../components/HeaderApp";
 import useUser from "../../hooks/useUser";
+import { Axios } from "../../services/Axios";
+import { UserLogin } from "../../context/AuthProvider";
 function Home() {
   const [usersList, setUserList] = useState<IUser[]>([]);
   const [userToEdit, setUserToEdit] = useState<IUser>();
   const User = useUser();
+  const Token = useContext(UserLogin)?.user?.token || "";
 
   function handleAddUser(user: IUser) {
     ///debug
-    setUserList((state) => [...state, user]);
-    return;
+    // setUserList((state) => [...state, user]);
+    // return;
     ///debug
-    User.AddUser(user).then((ret) => {
+    User.AddUser(user, Token).then((ret) => {
       if (ret) return setUserList((state) => [...state, user]);
       alert("Não foi possivel adicionar o usuário!");
     });
@@ -29,9 +32,9 @@ function Home() {
       setUserList([...copyList]);
     }
     ///debug
-    return EditOnList(user);
+    // return EditOnList(user);
     ///debug
-    User.EditUser(user).then((ret) => {
+    User.EditUser(user, Token).then((ret) => {
       if (ret) return EditOnList(user);
       alert("Falha ao editar o registro");
     });
@@ -39,7 +42,7 @@ function Home() {
   }
 
   function handleDeleteUser(user: IUser) {
-    User.DeleteUser(user).then((ret) => {
+    User.DeleteUser(user, Token).then((ret) => {
       if (ret) setUserList(usersList.filter((obj) => obj.id !== user.id));
     });
   }
@@ -48,9 +51,7 @@ function Home() {
     setUserToEdit({ ...user });
   }
   useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    User.GetUser(undefined, Token).then((res) => res && setUserList([...res]));
   }, []);
   return (
     <C.Container>

@@ -5,7 +5,6 @@ import { v4 as UUID } from "uuid";
 import * as jwt from "jsonwebtoken";
 import Config from "../../configs";
 function generateToken(id: string) {
-  console.log("aqui");
   return jwt.sign({ id }, Config.SECRET_JWT, {
     expiresIn: 60 * 60, //one hour
   });
@@ -15,22 +14,22 @@ export class ManagerController {
 
   async login(req: Request, res: Response, next: NextFunction) {
     const { user, pass } = req.body;
-    if (!user || !pass) return Promise.reject({ error: "Body empty" });
+    if (!user || !pass) return Promise.reject({ message: "Body empty" });
 
     let Manager = await this.ManagerRepository.findOneBy({ user });
 
     //verify if exist a user
     if (!Manager) {
-      return Promise.reject({ error: "User not Found" });
+      return Promise.reject({ message: "User not Found" });
     }
     //verify the pass of user founded
     if (Manager.pass.toString() !== pass.toString()) {
-      return Promise.reject({ error: "Invalid Password" });
+      return Promise.reject({ message: "Invalid Password" });
     }
     //return the user
     delete Manager.pass;
     const DataToReturn = {
-      data: Manager,
+      ...Manager,
       token: generateToken(Manager.id),
     };
 

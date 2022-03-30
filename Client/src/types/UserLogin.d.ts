@@ -6,5 +6,5 @@ export interface IUserLogin {
   user: string;
   pass: string;
   access: HolesUserLogin;
-  logged: boolean;
+  token?: string;
 }

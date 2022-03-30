@@ -6,8 +6,7 @@ interface Props {
 }
 function AuthRoute({ children }: Props) {
   const State = R.useContext(UserLogin);
-  console.log(State);
-  if (State?.user?.logged) {
+  if (State?.user?.token) {
     return <>{children}</>;
   } else {
     return <Navigate to="/login" replace />;
