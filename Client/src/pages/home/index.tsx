@@ -5,22 +5,16 @@ import { IUser } from "../../types/User";
 import * as C from "./style";
 import HeaderApp from "../../components/HeaderApp";
 import useUser from "../../hooks/useUser";
-import { Axios } from "../../services/Axios";
 import { UserLogin } from "../../context/AuthProvider";
 function Home() {
-  const [usersList, setUserList] = useState<IUser[]>([]);
-  const [userToEdit, setUserToEdit] = useState<IUser>();
   const User = useUser();
   const Token = useContext(UserLogin)?.user?.token || "";
+  const [usersList, setUserList] = useState<IUser[]>([]);
+  const [userToEdit, setUserToEdit] = useState<IUser>();
 
   function handleAddUser(user: IUser) {
-    ///debug
-    // setUserList((state) => [...state, user]);
-    // return;
-    ///debug
     User.AddUser(user, Token).then((ret) => {
-      if (ret) return setUserList((state) => [...state, user]);
-      alert("Não foi possivel adicionar o usuário!");
+      if (ret) return setUserList((state) => [...state, ret]);
     });
   }
 
@@ -31,12 +25,9 @@ function Home() {
       copyList.splice(i, 1, user);
       setUserList([...copyList]);
     }
-    ///debug
-    // return EditOnList(user);
-    ///debug
+
     User.EditUser(user, Token).then((ret) => {
       if (ret) return EditOnList(user);
-      alert("Falha ao editar o registro");
     });
     setUserToEdit(undefined);
   }
@@ -50,9 +41,11 @@ function Home() {
   function handleSendEditUserToForm(user: IUser) {
     setUserToEdit({ ...user });
   }
+
   useEffect(() => {
     User.GetUser(undefined, Token).then((res) => res && setUserList([...res]));
   }, []);
+
   return (
     <C.Container>
       <HeaderApp />
@@ -67,6 +60,7 @@ function Home() {
           handleSendEditUserToForm={handleSendEditUserToForm}
           handleEditUser={handleEditUser}
           handleDeleteUser={handleDeleteUser}
+          DisableButtons={userToEdit}
         />
       </C.AreaUsers>
     </C.Container>

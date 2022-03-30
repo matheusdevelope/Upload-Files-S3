@@ -6,12 +6,14 @@ interface Props {
   handleSendEditUserToForm: (user: IUser) => void;
   handleDeleteUser: (user: IUser) => void;
   handleEditUser: (user: IUser) => void;
+  DisableButtons: IUser | undefined;
 }
 function ListUsers({
   Users,
   handleSendEditUserToForm,
   handleDeleteUser,
   handleEditUser,
+  DisableButtons,
 }: Props) {
   function onChange(e: R.ChangeEvent<HTMLInputElement>, user: IUser) {
     handleEditUser({ ...user, allow_access: e.target.checked });
@@ -29,6 +31,7 @@ function ListUsers({
         />
         <div>
           <button
+            disabled={Boolean(DisableButtons)}
             onClick={() => {
               handleSendEditUserToForm(user);
             }}
@@ -36,6 +39,7 @@ function ListUsers({
             Editar
           </button>
           <button
+            disabled={Boolean(DisableButtons)}
             onClick={() => {
               handleDeleteUser(user);
             }}

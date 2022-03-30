@@ -55,7 +55,7 @@ export class UserController {
           message: "This CNPJ is already in use, try another.",
         });
 
-      if (request.body.ftp.length > 0) {
+      if (request.body.ftp?.length > 0) {
         const ftp = AppDataSource.getRepository(FTP);
         for (let i = 0; i < request.body.ftp.length; i++) {
           let bodyFTP = request.body.ftp[i];

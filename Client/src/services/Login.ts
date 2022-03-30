@@ -7,7 +7,7 @@ interface IUserBodyAuth {
 
 export async function useLogin(user: IUserBodyAuth) {
   try {
-    const ret = await Axios.post("/manager/login", user);
+    const ret = await Axios.post("/api/manager/login", user);
 
     return ret.data;
   } catch (e: any) {

@@ -4,31 +4,31 @@ import { IUser } from "../types/User";
 function useUser() {
   async function AddUser(user: IUser, token: string) {
     try {
-      await UserAPI.RegisterUser(user, token);
-      return true;
-    } catch (e) {
+      const ret: IUser = await UserAPI.RegisterUser(user, token);
+      return ret;
+    } catch (e: any) {
       console.error(e);
-      alert("Falha ao adicionar usuário");
+      alert("Falha ao adicionar usuário: " + e.data.message);
       return false;
     }
   }
   async function EditUser(user: IUser, token: string) {
     try {
-      await UserAPI.EditUser(user, token);
-      return true;
-    } catch (e) {
+      const ret: IUser = await UserAPI.EditUser(user, token);
+      return ret;
+    } catch (e: any) {
       console.error(e);
-      alert("Falha ao editar usuário");
+      alert("Falha ao editar usuário: " + e.data.message);
       return false;
     }
   }
   async function DeleteUser(user: IUser, token: string) {
     try {
-      await UserAPI.DeleteUser(user, token);
-      return true;
-    } catch (e) {
+      const ret = await UserAPI.DeleteUser(user, token);
+      return ret;
+    } catch (e: any) {
       console.error(e);
-      alert("Falha ao deletar usuário");
+      alert("Falha ao deletar usuário: " + e.data.message);
       return false;
     }
   }
@@ -36,9 +36,9 @@ function useUser() {
     try {
       const user: IUser[] = await UserAPI.GetUser(userID, token);
       return user;
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
-      alert("Falha ao listar usuários");
+      alert("Falha ao listar usuários: " + e.data.message);
       return false;
     }
   }
