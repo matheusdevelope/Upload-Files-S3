@@ -6,6 +6,7 @@ import * as C from "./style";
 import HeaderApp from "../../components/HeaderApp";
 import useUser from "../../hooks/useUser";
 import { UserLogin } from "../../context/AuthProvider";
+import AreaFTP from "../../components/AreaFTP";
 function Home() {
   const User = useUser();
   const Token = useContext(UserLogin)?.user?.token || "";
@@ -50,11 +51,15 @@ function Home() {
     <C.Container>
       <HeaderApp />
       <C.AreaUsers>
-        <FormUser
-          handleAddUser={handleAddUser}
-          handleEditUser={handleEditUser}
-          UserToEdit={userToEdit}
-        />
+        <div>
+          <FormUser
+            handleAddUser={handleAddUser}
+            handleEditUser={handleEditUser}
+            UserToEdit={userToEdit}
+          />
+          <AreaFTP FTPToEdit={userToEdit} />
+        </div>
+
         <ListUser
           Users={usersList}
           handleSendEditUserToForm={handleSendEditUserToForm}

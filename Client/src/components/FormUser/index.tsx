@@ -7,17 +7,7 @@ interface Props {
   handleEditUser: (user: IUser) => void;
   UserToEdit: IUser | undefined;
 }
-function HashUnique(size: number) {
-  let dt = new Date().getTime();
-  let base_size = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-  let new_size = base_size.substring(0, Number(size) < 5 ? 5 : Number(size));
-  let uuid = new_size.replace(/[xy]/g, function (c) {
-    let r = (dt + Math.random() * 16) % 16 | 0;
-    dt = Math.floor(dt / 16);
-    return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
-  });
-  return uuid;
-}
+
 function FormUser({ handleAddUser, handleEditUser, UserToEdit }: Props) {
   const InitialUser: IUser = {
     id: "",
@@ -25,6 +15,7 @@ function FormUser({ handleAddUser, handleEditUser, UserToEdit }: Props) {
     cnpj: "",
     allow_access: true,
     expiration_files: 30,
+    ftp: [],
   };
   const [user, setUser] = R.useState<IUser>(InitialUser);
 
@@ -54,7 +45,7 @@ function FormUser({ handleAddUser, handleEditUser, UserToEdit }: Props) {
     if (UserToEdit) {
       handleEditUser(user);
     } else {
-      handleAddUser({ ...user, id: HashUnique(10) });
+      handleAddUser({ ...user });
     }
     setUser(InitialUser);
   }
@@ -78,6 +69,7 @@ function FormUser({ handleAddUser, handleEditUser, UserToEdit }: Props) {
         <label>
           Tempo De Expiração Arquivos:
           <input
+            type="number"
             name="expiration_files"
             value={user.expiration_files}
             onChange={OnChange}
