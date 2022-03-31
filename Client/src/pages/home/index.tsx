@@ -7,15 +7,22 @@ import HeaderApp from "../../components/HeaderApp";
 import useUser from "../../hooks/useUser";
 import { UserLogin } from "../../context/AuthProvider";
 import AreaFTP from "../../components/AreaFTP";
+import { IFTP } from "../../types/FTP";
 function Home() {
   const User = useUser();
   const Token = useContext(UserLogin)?.user?.token || "";
   const [usersList, setUserList] = useState<IUser[]>([]);
   const [userToEdit, setUserToEdit] = useState<IUser>();
-
+  const [FTPList, setFTPList] = useState<IFTP[]>([]);
+  console.log(FTPList);
   function handleAddUser(user: IUser) {
+    user.ftp = [...FTPList];
     User.AddUser(user, Token).then((ret) => {
-      if (ret) return setUserList((state) => [...state, ret]);
+      if (ret) {
+        setFTPList([]);
+        setUserList((state) => [...state, ret]);
+        return;
+      }
     });
   }
 
@@ -24,9 +31,10 @@ function Home() {
       const i = usersList.findIndex((obj, i) => obj.id === user.id);
       let copyList = usersList;
       copyList.splice(i, 1, user);
+      setFTPList([]);
       setUserList([...copyList]);
     }
-
+    if (userToEdit) user.ftp = [...FTPList];
     User.EditUser(user, Token).then((ret) => {
       if (ret) return EditOnList(user);
     });
@@ -41,6 +49,7 @@ function Home() {
 
   function handleSendEditUserToForm(user: IUser) {
     setUserToEdit({ ...user });
+    setFTPList([...user.ftp]);
   }
 
   useEffect(() => {
@@ -57,7 +66,7 @@ function Home() {
             handleEditUser={handleEditUser}
             UserToEdit={userToEdit}
           />
-          <AreaFTP FTPToEdit={userToEdit} />
+          <AreaFTP FTPList={FTPList} setFTPList={setFTPList} />
         </div>
 
         <ListUser

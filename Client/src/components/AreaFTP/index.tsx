@@ -6,44 +6,48 @@ import ListFTPs from "../ListFTP";
 import * as C from "./style";
 
 interface Props {
-  FTPToEdit?: IUser;
+  FTPList: IFTP[];
+  setFTPList: (FTPList: IFTP[]) => void;
 }
 
-function AreaFTP({ FTPToEdit }: Props) {
-  const [FTP, setFTP] = R.useState<IFTP[]>([]);
+function AreaFTP({ FTPList, setFTPList }: Props) {
   const [ftpToEdit, setFtpToEdit] = R.useState<IFTP>();
+  const [Index, setIndex] = R.useState(0);
 
   function MaxId(ftp: IFTP) {
-    if (FTP.length === 0) return 0;
+    if (FTPList.length === 0) return 0;
     let IDs: number[] = [];
-    FTP.forEach((obj) => {
+    FTPList.forEach((obj) => {
       IDs.push(Number(obj.id));
     });
     return Math.max(...IDs);
   }
 
   function handleAddFTP(ftp: IFTP) {
-    ftp.id = String(MaxId(ftp) + 1);
-    let newFTP = FTP;
+    // ftp.id = String(MaxId(ftp) + 1);
+    let newFTP = FTPList;
     newFTP.push(ftp);
-    setFTP([...newFTP]);
+    setFTPList([...newFTP]);
   }
 
-  function handleSendEditFTPToForm(ftp: IFTP) {
+  function handleSendEditFTPToForm(ftp: IFTP, key: number) {
+    console.log(key);
+    setIndex(key);
     setFtpToEdit({ ...ftp });
   }
-  function handleEditFTP(ftp: IFTP) {
-    const i = FTP.findIndex((obj, i) => obj.id === ftp.id);
-    let copyList = FTP;
-    copyList.splice(i, 1, ftp);
-    setFTP([...copyList]);
+  function handleEditFTP(ftp: IFTP, key?: number) {
+    // const i = FTPList.findIndex((obj, i) => obj.id === ftp.id);
+    let copyList = FTPList;
+    copyList.splice(key || Index, 1, ftp);
+    Index > 0 && setIndex(0);
+    setFTPList([...copyList]);
     setFtpToEdit(undefined);
   }
-  function handleDeleteFTP(ftp: IFTP) {
-    const i = FTP.findIndex((obj, i) => obj.id === ftp.id);
-    let copyList = FTP;
-    copyList.splice(i, 1);
-    setFTP([...copyList]);
+  function handleDeleteFTP(ftp: IFTP, key: number) {
+    //const i = FTPList.findIndex((obj, i) => obj.id === ftp.id);
+    let copyList = FTPList;
+    copyList.splice(key, 1);
+    setFTPList([...copyList]);
   }
 
   return (
@@ -54,7 +58,7 @@ function AreaFTP({ FTPToEdit }: Props) {
         FTPToEdit={ftpToEdit}
       />
       <ListFTPs
-        FTPs={FTP}
+        FTPs={FTPList}
         handleSendEditFTPToForm={handleSendEditFTPToForm}
         handleEditFTP={handleEditFTP}
         handleDeleteFTP={handleDeleteFTP}

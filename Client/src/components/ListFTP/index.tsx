@@ -3,9 +3,9 @@ import { IFTP } from "../../types/FTP";
 import * as C from "./style";
 interface Props {
   FTPs: IFTP[];
-  handleSendEditFTPToForm: (FTP: IFTP) => void;
-  handleDeleteFTP: (FTP: IFTP) => void;
-  handleEditFTP: (FTP: IFTP) => void;
+  handleSendEditFTPToForm: (FTP: IFTP, key: number) => void;
+  handleDeleteFTP: (FTP: IFTP, key: number) => void;
+  handleEditFTP: (FTP: IFTP, key: number) => void;
   DisableButtons: IFTP | undefined;
 }
 function ListFTPs({
@@ -15,8 +15,12 @@ function ListFTPs({
   handleEditFTP,
   DisableButtons,
 }: Props) {
-  function onChange(e: R.ChangeEvent<HTMLInputElement>, FTP: IFTP) {
-    handleEditFTP({ ...FTP, deleteFiles: e.target.checked });
+  function onChange(
+    e: R.ChangeEvent<HTMLInputElement>,
+    FTP: IFTP,
+    key: number
+  ) {
+    handleEditFTP({ ...FTP, deleteFiles: e.target.checked }, key);
   }
   function RenderLine(FTP: IFTP, key: number) {
     return (
@@ -28,15 +32,16 @@ function ListFTPs({
         <p>{FTP.path}</p>
         <p>{FTP.order}</p>
         <input
+          disabled={Boolean(DisableButtons)}
           type="checkbox"
           checked={FTP.deleteFiles}
-          onChange={(e) => onChange(e, FTP)}
+          onChange={(e) => onChange(e, FTP, key)}
         />
         <div>
           <button
             disabled={Boolean(DisableButtons)}
             onClick={() => {
-              handleSendEditFTPToForm(FTP);
+              handleSendEditFTPToForm(FTP, key);
             }}
           >
             Editar
@@ -44,7 +49,7 @@ function ListFTPs({
           <button
             disabled={Boolean(DisableButtons)}
             onClick={() => {
-              handleDeleteFTP(FTP);
+              handleDeleteFTP(FTP, key);
             }}
           >
             Excluir

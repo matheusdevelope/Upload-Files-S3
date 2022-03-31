@@ -57,27 +57,15 @@ export class UserController {
 
       if (request.body.ftp?.length > 0) {
         const ftp = AppDataSource.getRepository(FTP);
+        const objFTP = new FTP();
+        await ftp.delete({ userId: request.body.id });
         for (let i = 0; i < request.body.ftp.length; i++) {
           let bodyFTP = request.body.ftp[i];
-          console.log("THE FTP", request.body.ftp[i]);
-          await ftp.update(
-            {
-              id: request.body.ftp[i].id,
-            },
-            {
-              host: bodyFTP.host,
-              user: bodyFTP.user,
-              pass: bodyFTP.pass,
-              port: Number(bodyFTP.port),
-              path: bodyFTP.path,
-              deleteFiles: bodyFTP.deleteFiles,
-              order: bodyFTP.order,
-            }
-          );
+          objFTP.userId = request.body;
+          await ftp.save({ ...objFTP, ...bodyFTP });
         }
       }
       delete request.body.ftp;
-      console.log(request.body);
 
       return this.userRepository.update(
         {

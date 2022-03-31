@@ -3,7 +3,7 @@ import { IFTP } from "../../types/FTP";
 import * as C from "./style";
 interface Props {
   handleAddFTP: (FTP: IFTP) => void;
-  handleEditFTP: (FTP: IFTP) => void;
+  handleEditFTP: (FTP: IFTP, key?: number) => void;
   FTPToEdit: IFTP | undefined;
 }
 
@@ -16,7 +16,6 @@ function FormFTP({ handleAddFTP, handleEditFTP, FTPToEdit }: Props) {
     path: "",
     deleteFiles: true,
     order: 1,
-    id: "0",
   };
   const [FTP, setFTP] = R.useState<IFTP>(InitialFTP);
 
