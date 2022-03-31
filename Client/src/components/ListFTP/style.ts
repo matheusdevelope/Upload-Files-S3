@@ -26,24 +26,39 @@ export const Tittles = styled.div`
   }
 `;
 export const LineFTP = styled.div`
-  display: flex;
+  /* display: flex; */
   width: 100%;
   min-height: 30px;
   border-bottom: 1px #ddd solid;
+  padding: 4px;
   p,
-  input {
+  input,
+  label {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin: auto;
+    margin: auto 0;
     flex: 1;
-    padding: 0 8px;
+    text-align: start;
+    input {
+      margin: 0 4px;
+    }
   }
   div {
     margin: auto;
     display: flex;
     flex: 1;
-    padding: 0 8px;
-    justify-content: space-around;
+  }
+  button {
+    margin: auto 4px;
+    width: 50px;
+  }
+
+  .user,
+  .pass,
+  .port,
+  .order {
+    margin: auto 4px;
+    max-width: 50px;
   }
 `;

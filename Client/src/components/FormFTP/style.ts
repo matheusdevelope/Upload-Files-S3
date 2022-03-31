@@ -15,6 +15,7 @@ export const Header = styled.div`
   border-bottom: 1px solid #ddd;
 `;
 export const Form = styled.div`
+  padding: 4px;
   div {
     display: flex;
   }
@@ -25,16 +26,28 @@ export const Form = styled.div`
     display: flex;
     flex-direction: column;
   }
+  .port {
+    margin-left: 4px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 90px;
+    input {
+      margin-left: 4px;
+    }
+  }
   .Div2 {
     display: flex;
     flex-direction: column;
     label {
+      display: flex;
       flex-direction: row;
-      justify-content: space-between;
       align-items: center;
     }
     input {
-      width: 30%;
+      margin: auto 4px;
+      width: fit-content;
+      max-width: 50px;
     }
   }
 `;

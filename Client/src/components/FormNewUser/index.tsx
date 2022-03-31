@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import FormUser from "../../components/FormUser";
 import ListUser from "../../components/ListUsers";
 import { IUser } from "../../types/User";
@@ -61,30 +61,25 @@ function Home() {
     User.GetUser(undefined, Token).then((res) => res && setUserList([...res]));
   }, []);
 
-  const Ref = useRef(null);
-
   return (
     <C.Container>
       <HeaderApp />
-      <C.AreaUsers>
-        <div>
-          <FormUser
-            ref={Ref}
-            handleAddUser={handleAddUser}
-            handleEditUser={handleEditUser}
-            UserToEdit={userToEdit}
-          />
-          <AreaFTP FTPList={FTPList} setFTPList={setFTPList} />
-        </div>
-
-        <ListUser
-          Users={usersList}
-          handleSendEditUserToForm={handleSendEditUserToForm}
+      <div>
+        <FormUser
+          handleAddUser={handleAddUser}
           handleEditUser={handleEditUser}
-          handleDeleteUser={handleDeleteUser}
-          DisableButtons={userToEdit}
+          UserToEdit={userToEdit}
         />
-      </C.AreaUsers>
+        <AreaFTP FTPList={FTPList} setFTPList={setFTPList} />
+      </div>
+
+      <ListUser
+        Users={usersList}
+        handleSendEditUserToForm={handleSendEditUserToForm}
+        handleEditUser={handleEditUser}
+        handleDeleteUser={handleDeleteUser}
+        DisableButtons={userToEdit}
+      />
     </C.Container>
   );
 }

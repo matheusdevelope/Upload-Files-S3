@@ -25,19 +25,29 @@ function ListFTPs({
   function RenderLine(FTP: IFTP, key: number) {
     return (
       <C.LineFTP key={key}>
-        <p>{FTP.host}</p>
-        <p>{FTP.user}</p>
-        <p>{FTP.pass}</p>
-        <p>{FTP.port}</p>
-        <p>{FTP.path}</p>
-        <p>{FTP.order}</p>
-        <input
-          disabled={Boolean(DisableButtons)}
-          type="checkbox"
-          checked={FTP.deleteFiles}
-          onChange={(e) => onChange(e, FTP, key)}
-        />
         <div>
+          <p className="host">{FTP.host}</p>
+          <p className="user">{FTP.user}</p>
+          <p className="pass">{FTP.pass}</p>
+        </div>
+        <div>
+          <p className="path">{FTP.path}</p>
+          <p className="port">{FTP.port}</p>
+          <p className="order">{FTP.order}</p>
+        </div>
+
+        <div>
+          <label htmlFor="deleteFiles">
+            <input
+              className="deleteFiles"
+              disabled={Boolean(DisableButtons)}
+              type="checkbox"
+              checked={FTP.deleteFiles}
+              onChange={(e) => onChange(e, FTP, key)}
+            />
+            Deletar Arquivos
+          </label>
+
           <button
             disabled={Boolean(DisableButtons)}
             onClick={() => {
@@ -60,13 +70,6 @@ function ListFTPs({
   }
   return (
     <C.Container>
-      <C.Tittles>
-        <p>Nome</p>
-        <p>CNPJ</p>
-        <p>Expiração Arquivos</p>
-        <p>Acessa API</p>
-        <p>Ação</p>
-      </C.Tittles>
       <ul>{FTPs.map(RenderLine)}</ul>
     </C.Container>
   );

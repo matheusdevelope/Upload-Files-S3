@@ -69,7 +69,6 @@ function FormFTP({ handleAddFTP, handleEditFTP, FTPToEdit }: Props) {
   }, [FTPToEdit]);
   return (
     <C.Container>
-      <C.Header>Conexão FTP</C.Header>
       <C.Form>
         <div>
           <input
@@ -78,6 +77,18 @@ function FormFTP({ handleAddFTP, handleEditFTP, FTPToEdit }: Props) {
             onChange={OnChange}
             placeholder="Host"
           />
+          <label htmlFor="port" className="port">
+            Porta:
+            <input
+              name="port"
+              type="number"
+              value={FTP.port}
+              onChange={OnChange}
+              placeholder="Porta"
+            />
+          </label>
+        </div>
+        <div>
           <input
             name="user"
             value={FTP.user}
@@ -90,13 +101,6 @@ function FormFTP({ handleAddFTP, handleEditFTP, FTPToEdit }: Props) {
             onChange={OnChange}
             placeholder="Senha"
           />
-          <input
-            name="port"
-            type="number"
-            value={FTP.port}
-            onChange={OnChange}
-            placeholder="Porta"
-          />
         </div>
 
         <label>
@@ -106,15 +110,15 @@ function FormFTP({ handleAddFTP, handleEditFTP, FTPToEdit }: Props) {
 
         <div className="Div2">
           <label className="labelDeleteFiles">
-            Deletar Arquivos após uso:
             <input
               name="deleteFiles"
               type="checkbox"
               checked={FTP.deleteFiles}
               onChange={OnChange}
             />
+            Deletar Arquivos após uso:
           </label>
-          <label className="labelDeleteFiles">
+          <label>
             Ordem Disponibilidade:
             <input
               name="order"
