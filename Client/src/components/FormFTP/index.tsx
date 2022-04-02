@@ -130,7 +130,7 @@ function FormFTP({ handleAddFTP, handleEditFTP, FTPToEdit }: Props) {
         </div>
       </C.Form>
       <C.Button onClick={handleOnClick}>
-        {FTPToEdit ? "Salvar Alterações" : "Adicionar"}
+        {FTPToEdit ? "Salvar Alterações FTP" : "Adicionar FTP"}
       </C.Button>
     </C.Container>
   );

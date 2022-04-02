@@ -18,9 +18,6 @@ export class User {
   @Column()
   allow_access: boolean;
 
-  @OneToMany(() => FTP, (ftp) => ftp.userId, {
-    onDelete: "CASCADE",
-    cascade: true,
-  })
+  @OneToMany(() => FTP, (ftp) => ftp.userId)
   ftp: FTP[];
 }

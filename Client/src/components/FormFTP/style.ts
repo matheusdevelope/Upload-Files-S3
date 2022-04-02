@@ -6,7 +6,6 @@ export const Container = styled.div`
   flex-direction: column;
   flex: 1;
   max-width: 300px;
-  border-right: 1px #ddd solid;
 `;
 
 export const Header = styled.div`
@@ -52,4 +51,6 @@ export const Form = styled.div`
   }
 `;
 
-export const Button = styled.button``;
+export const Button = styled.button`
+  margin: 4px 8px;
+`;

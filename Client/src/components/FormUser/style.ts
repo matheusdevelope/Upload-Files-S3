@@ -39,4 +39,7 @@ export const Form = styled.div`
   }
 `;
 
-export const Button = styled.button``;
+export const Button = styled.button`
+  height: 30px;
+  margin: 8px;
+`;

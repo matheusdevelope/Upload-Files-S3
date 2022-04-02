@@ -1,4 +1,10 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import {
+  MutableRefObject,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import FormUser from "../../components/FormUser";
 import ListUser from "../../components/ListUsers";
 import { IUser } from "../../types/User";
@@ -6,19 +12,14 @@ import * as C from "./style";
 import HeaderApp from "../../components/HeaderApp";
 import useUser from "../../hooks/useUser";
 import { UserLogin } from "../../context/AuthProvider";
-import AreaFTP from "../../components/AreaFTP";
-import { IFTP } from "../../types/FTP";
 function Home() {
   const User = useUser();
   const Token = useContext(UserLogin)?.user?.token || "";
   const [usersList, setUserList] = useState<IUser[]>([]);
   const [userToEdit, setUserToEdit] = useState<IUser>();
-  const [FTPList, setFTPList] = useState<IFTP[]>([]);
   async function handleAddUser(user: IUser) {
-    user.ftp = [...FTPList];
     const ret = await User.AddUser(user, Token);
     if (ret) {
-      setFTPList([]);
       setUserList((state) => [...state, ret]);
       return Promise.resolve(true);
     }
@@ -31,10 +32,8 @@ function Home() {
       const i = usersList.findIndex((obj, i) => obj.id === user.id);
       let copyList = usersList;
       copyList.splice(i, 1, user);
-      setFTPList([]);
       setUserList([...copyList]);
     }
-    if (userToEdit) user.ftp = [...FTPList];
     const ret = await User.EditUser(user, Token);
 
     if (ret) {
@@ -42,7 +41,6 @@ function Home() {
       setUserToEdit(undefined);
       return Promise.resolve(true);
     }
-
     return Promise.resolve(false);
   }
 
@@ -54,14 +52,11 @@ function Home() {
 
   function handleSendEditUserToForm(user: IUser) {
     setUserToEdit({ ...user });
-    setFTPList([...user.ftp]);
   }
 
   useEffect(() => {
     User.GetUser(undefined, Token).then((res) => res && setUserList([...res]));
   }, []);
-
-  const Ref = useRef(null);
 
   return (
     <C.Container>
@@ -69,12 +64,10 @@ function Home() {
       <C.AreaUsers>
         <div>
           <FormUser
-            ref={Ref}
             handleAddUser={handleAddUser}
             handleEditUser={handleEditUser}
             UserToEdit={userToEdit}
           />
-          <AreaFTP FTPList={FTPList} setFTPList={setFTPList} />
         </div>
 
         <ListUser

@@ -32,6 +32,8 @@ export class FTP {
   @Column()
   order: number;
 
-  @ManyToOne(() => User, (user) => user.ftp)
+  @ManyToOne(() => User, (user) => user.ftp, {
+    onDelete: "CASCADE",
+  })
   userId: User;
 }
