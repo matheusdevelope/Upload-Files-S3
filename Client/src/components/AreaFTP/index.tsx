@@ -7,9 +7,10 @@ import * as C from "./style";
 interface Props {
   FTPList: IFTP[];
   setFTPList: (FTPList: IFTP[]) => void;
+  reset: boolean;
 }
 
-function AreaFTP({ FTPList, setFTPList }: Props) {
+function AreaFTP({ FTPList, setFTPList, reset }: Props) {
   const [ftpToEdit, setFtpToEdit] = R.useState<IFTP>();
   const [Index, setIndex] = R.useState(0);
 
@@ -18,7 +19,6 @@ function AreaFTP({ FTPList, setFTPList }: Props) {
     newFTP.push(ftp);
     setFTPList([...newFTP]);
   }
-
   function handleSendEditFTPToForm(ftp: IFTP, key: number) {
     setIndex(key);
     setFtpToEdit({ ...ftp });
@@ -50,6 +50,7 @@ function AreaFTP({ FTPList, setFTPList }: Props) {
         handleAddFTP={handleAddFTP}
         handleEditFTP={handleEditFTP}
         FTPToEdit={ftpToEdit}
+        reset={reset}
       />
     </C.Container>
   );

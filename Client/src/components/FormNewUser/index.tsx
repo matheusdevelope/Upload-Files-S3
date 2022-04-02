@@ -8,7 +8,7 @@ import useUser from "../../hooks/useUser";
 import { UserLogin } from "../../context/AuthProvider";
 import AreaFTP from "../../components/AreaFTP";
 import { IFTP } from "../../types/FTP";
-function Home() {
+function FormNewUser() {
   const User = useUser();
   const Token = useContext(UserLogin)?.user?.token || "";
   const [usersList, setUserList] = useState<IUser[]>([]);
@@ -84,4 +84,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default FormNewUser;

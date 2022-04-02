@@ -1,8 +1,8 @@
 import * as R from "react";
 import { useNavigate } from "react-router-dom";
-import { useLogin } from "../../services/Login";
 import { UserLogin } from "../../context/AuthProvider";
 import * as C from "./style";
+import { LoginManager } from "../../services/ManagerAPI";
 function Login() {
   const [userInput, setUserInput] = R.useState<string>("");
   const [passInput, setPassInput] = R.useState<string>("");
@@ -11,6 +11,7 @@ function Login() {
   const navigate = useNavigate();
   return (
     <C.Container>
+      <h2>Faça o Login</h2>
       <form
         onSubmit={async (e) => {
           e.preventDefault();
@@ -22,9 +23,8 @@ function Login() {
             return alert("Preencha os Dados!");
           setLoading(true);
           try {
-            const retUser = await useLogin(user);
+            const retUser = await LoginManager(user);
             State?.setUser(retUser);
-            console.log("aqui");
             navigate("/home");
             return;
           } catch (e: any) {
@@ -32,8 +32,6 @@ function Login() {
             alert("Falha no login: " + JSON.stringify(e.data.message));
             return;
           }
-
-          setLoading(false);
         }}
       >
         <label htmlFor="user">

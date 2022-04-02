@@ -20,6 +20,7 @@ function FormUser({ handleAddUser, handleEditUser, UserToEdit }: Props) {
     ftp: [],
   };
   const [user, setUser] = R.useState<IUser>(InitialUser);
+  const [reset, setReset] = R.useState(false);
 
   function OnChange(e: R.ChangeEvent<HTMLInputElement>) {
     switch (e.target.name) {
@@ -49,10 +50,10 @@ function FormUser({ handleAddUser, handleEditUser, UserToEdit }: Props) {
       if (!ret) return;
     } else {
       const ret = await handleAddUser({ ...user });
-
       if (!ret) return;
     }
-    setUser(InitialUser);
+    setUser({ ...InitialUser });
+    setReset(!reset);
   }
   function setFTPList(ftpList: IFTP[]) {
     let copy = user;
@@ -95,7 +96,7 @@ function FormUser({ handleAddUser, handleEditUser, UserToEdit }: Props) {
           Acessar Recursos API:
         </label>
       </C.Form>
-      <AreaFTP FTPList={user.ftp} setFTPList={setFTPList} />
+      <AreaFTP FTPList={user.ftp} setFTPList={setFTPList} reset={reset} />
       <C.Button onClick={handleOnClick}>
         {UserToEdit ? "Salvar Alterações Usuário" : "Adicionar Usuário"}
       </C.Button>

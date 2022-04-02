@@ -5,9 +5,10 @@ interface Props {
   handleAddFTP: (FTP: IFTP) => void;
   handleEditFTP: (FTP: IFTP, key?: number) => void;
   FTPToEdit: IFTP | undefined;
+  reset: boolean;
 }
 
-function FormFTP({ handleAddFTP, handleEditFTP, FTPToEdit }: Props) {
+function FormFTP({ handleAddFTP, handleEditFTP, FTPToEdit, reset }: Props) {
   const InitialFTP: IFTP = {
     host: "",
     user: "",
@@ -67,6 +68,9 @@ function FormFTP({ handleAddFTP, handleEditFTP, FTPToEdit }: Props) {
   R.useEffect(() => {
     if (FTPToEdit) setFTP({ ...FTPToEdit });
   }, [FTPToEdit]);
+  R.useEffect(() => {
+    setFTP({ ...InitialFTP });
+  }, [reset]);
   return (
     <C.Container>
       <C.Form>

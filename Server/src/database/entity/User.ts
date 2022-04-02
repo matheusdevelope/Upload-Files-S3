@@ -18,6 +18,6 @@ export class User {
   @Column()
   allow_access: boolean;
 
-  @OneToMany(() => FTP, (ftp) => ftp.userId)
+  @OneToMany(() => FTP, (ftp) => ftp.userId, { cascade: true })
   ftp: FTP[];
 }

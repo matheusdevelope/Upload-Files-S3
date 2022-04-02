@@ -7,15 +7,16 @@ export const Container = styled.div`
   min-height: 100vh;
   align-items: center;
   justify-content: center;
+  padding: 8px;
   form {
-    margin: 50px;
+    margin: 16px;
   }
   label {
     display: flex;
     flex: 1;
     flex-direction: column;
-    align-items: center;
-    font-size: 20px;
+    align-items: flex-start;
+    font-size: 16px;
   }
   input {
     font-size: 18px;

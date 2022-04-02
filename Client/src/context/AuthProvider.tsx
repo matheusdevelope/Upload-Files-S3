@@ -1,9 +1,15 @@
 import { createContext, ReactNode, useState } from "react";
-import { HolesUserLogin, IUserLogin } from "../types/UserLogin";
+import { IManager } from "../types/Manager";
+interface IHolesManager {
+  firstAccess: 0;
+  readOnly: 1;
+  all: 2;
+}
 
 interface IContext {
-  user: IUserLogin | undefined;
-  setUser: (user: IUserLogin) => void;
+  user: IManager | undefined;
+  setUser: (user: IManager | undefined) => void;
+  HolesManager: IHolesManager;
 }
 interface Props {
   children: ReactNode;
@@ -12,11 +18,16 @@ interface Props {
 export const UserLogin = createContext<IContext | undefined>(undefined);
 
 function AuthProvider({ children }: Props) {
-  const [user, setUser] = useState<IUserLogin | undefined>(undefined);
-
+  const [user, setUser] = useState<IManager | undefined>(undefined);
+  const HolesManager: IHolesManager = {
+    firstAccess: 0,
+    readOnly: 1,
+    all: 2,
+  };
   const value: IContext = {
     user,
     setUser,
+    HolesManager,
   };
 
   return <UserLogin.Provider value={value}>{children}</UserLogin.Provider>;
