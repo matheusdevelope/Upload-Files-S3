@@ -9,4 +9,7 @@ export const Container = styled.div`
     color: #f3f3ed;
     margin: auto;
   }
+  .SpaceMenu {
+    width: 50px;
+  }
 `;

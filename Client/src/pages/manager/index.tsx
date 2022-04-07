@@ -6,7 +6,7 @@ import * as C from "./style";
 import HeaderApp from "../../components/HeaderApp";
 import useUser from "../../hooks/useUser";
 import { UserLogin } from "../../context/AuthProvider";
-function Home() {
+function Manager() {
   const User = useUser();
   const Token = useContext(UserLogin)?.user?.token || "";
   const [usersList, setUserList] = useState<IUser[]>([]);
@@ -17,6 +17,7 @@ function Home() {
       setUserList((state) => [...state, ret]);
       return Promise.resolve(true);
     }
+
     return Promise.resolve(false);
   }
 
@@ -53,7 +54,7 @@ function Home() {
 
   return (
     <C.Container>
-      <HeaderApp origin="Home" />
+      <HeaderApp origin="Manager" />
       <C.AreaUsers>
         <div>
           <FormUser
@@ -62,17 +63,9 @@ function Home() {
             UserToEdit={userToEdit}
           />
         </div>
-
-        <ListUser
-          Users={usersList}
-          handleSendEditUserToForm={handleSendEditUserToForm}
-          handleEditUser={handleEditUser}
-          handleDeleteUser={handleDeleteUser}
-          DisableButtons={userToEdit}
-        />
       </C.AreaUsers>
     </C.Container>
   );
 }
 
-export default Home;
+export default Manager;
