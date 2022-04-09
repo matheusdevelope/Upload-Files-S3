@@ -53,7 +53,7 @@ function Home() {
 
   return (
     <C.Container>
-      <HeaderApp origin="Home" />
+      <HeaderApp origin="Home" title="REGISTRO USUÁRIOS API" />
       <C.AreaUsers>
         <div>
           <FormUser

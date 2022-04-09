@@ -6,6 +6,7 @@ import * as C from "./style";
 import HeaderApp from "../../components/HeaderApp";
 import useUser from "../../hooks/useUser";
 import { UserLogin } from "../../context/AuthProvider";
+import FormManager from "../../components/FormManager";
 function Manager() {
   const User = useUser();
   const Token = useContext(UserLogin)?.user?.token || "";
@@ -54,15 +55,18 @@ function Manager() {
 
   return (
     <C.Container>
-      <HeaderApp origin="Manager" />
+      <HeaderApp origin="Manager" title="AREA DO ADMINISTRADOR" />
       <C.AreaUsers>
         <div>
-          <FormUser
-            handleAddUser={handleAddUser}
-            handleEditUser={handleEditUser}
-            UserToEdit={userToEdit}
-          />
+          <FormManager />
         </div>
+        <ListUser
+          Users={usersList}
+          handleSendEditUserToForm={handleSendEditUserToForm}
+          handleEditUser={handleEditUser}
+          handleDeleteUser={handleDeleteUser}
+          DisableButtons={userToEdit}
+        />
       </C.AreaUsers>
     </C.Container>
   );

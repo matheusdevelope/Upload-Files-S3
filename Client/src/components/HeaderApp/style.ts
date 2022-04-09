@@ -10,6 +10,6 @@ export const Container = styled.div`
     margin: auto;
   }
   .SpaceMenu {
-    width: 50px;
+    width: 70px;
   }
 `;

@@ -1,14 +1,14 @@
-import * as R from "react";
 import Menu from "../Menu";
 import * as C from "./style";
 interface Props {
   origin: string;
+  title: string;
 }
-function HeaderApp({ origin }: Props) {
+function HeaderApp({ origin, title }: Props) {
   return (
     <C.Container>
       <Menu origin={origin} />
-      <p>REGISTRO USUÁRIOS API</p>
+      <p>{title}</p>
       <div className="SpaceMenu"></div>
     </C.Container>
   );
