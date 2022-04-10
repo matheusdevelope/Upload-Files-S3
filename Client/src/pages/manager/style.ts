@@ -7,7 +7,7 @@ export const Container = styled.div`
   min-height: 100vh;
 `;
 
-export const AreaUsers = styled.div`
+export const AreaManagers = styled.div`
   display: flex;
   flex: 1;
 `;

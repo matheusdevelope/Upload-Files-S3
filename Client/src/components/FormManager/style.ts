@@ -14,3 +14,8 @@ export const Header = styled.div`
   background-color: #eee;
   border-bottom: 1px solid #ddd;
 `;
+
+export const Button = styled.button`
+  height: 30px;
+  margin: 8px;
+`;
