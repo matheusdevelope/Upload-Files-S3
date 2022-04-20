@@ -11,3 +11,10 @@ export const AreaManagers = styled.div`
   display: flex;
   flex: 1;
 `;
+
+export const FormFTPDefault = styled.div`
+  margin: 8px 0;
+  .HeaderFormFTPDefault {
+    display: flex;
+  }
+`;
