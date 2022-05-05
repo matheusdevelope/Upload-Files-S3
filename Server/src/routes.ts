@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ManagerController } from "./database/controller/ManagerController";
 import { UserController } from "./database/controller/UserController";
+import { FtpController } from "./database/controller/FTPController";
 import { StartProcess } from "./api/aws.js";
 const Manager = [
   {
@@ -72,7 +73,38 @@ const User = [
     action: "remove",
   },
 ];
-
+const FTP = [
+  {
+    method: "get",
+    route: "/api/ftp",
+    controller: FtpController,
+    action: "all",
+  },
+  {
+    method: "get",
+    route: "/api/ftp/:id",
+    controller: FtpController,
+    action: "one",
+  },
+  {
+    method: "post",
+    route: "/api/ftp",
+    controller: FtpController,
+    action: "save",
+  },
+  {
+    method: "put",
+    route: "/api/ftp/:id",
+    controller: FtpController,
+    action: "update",
+  },
+  {
+    method: "delete",
+    route: "/api/ftp/:id",
+    controller: FtpController,
+    action: "remove",
+  },
+];
 class EntryPoint {
   async entry(request: Request, response: Response, next: NextFunction) {
     return Promise.resolve(
@@ -219,4 +251,5 @@ export const Routes = [
   },
   ...Manager,
   ...User,
+  ...FTP,
 ];

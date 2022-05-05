@@ -24,10 +24,10 @@ function FormManager({
     pass: "",
   };
   const [user, setUser] = R.useState<IManager>(initialManager);
-  const [userInput, setUserInput] = R.useState("");
-  const [nameInput, setNameInput] = R.useState("");
-  const [access, setAccess] = R.useState(1);
-  const [passInput, setPassInput] = R.useState("");
+  // const [userInput, setUserInput] = R.useState("");
+  // const [nameInput, setNameInput] = R.useState("");
+  // const [access, setAccess] = R.useState(1);
+  // const [passInput, setPassInput] = R.useState("");
   const [confirmpassInput, setConfirmPassInput] = R.useState("");
 
   function OnChange(e: R.ChangeEvent<HTMLInputElement>) {
