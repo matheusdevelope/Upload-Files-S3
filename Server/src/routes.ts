@@ -239,13 +239,13 @@ export const Routes = [
   // },
   {
     method: "get",
-    route: "/api/help",
+    route: "/help",
     controller: EntryPoint,
     action: "help",
   },
   {
     method: "post",
-    route: "/api/up_file_ftp",
+    route: "/",
     controller: EntryPoint,
     action: "up_file_ftp",
   },

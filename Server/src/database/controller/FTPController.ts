@@ -36,43 +36,43 @@ export class FtpController {
     }
   }
 
-  async update(request: Request, response: Response, next: NextFunction) {
-    try {
-      let ftpToUpdate = await this.ftpRepository.findOneBy({
-        id: request.params.id,
-      });
-      if (!ftpToUpdate) return Promise.reject({ message: "ftp not found" });
-      const ftp = await this.ftpRepository.findOneBy({
-        cnpj: request.body.cnpj,
-      });
-      if (ftp && ftp.id !== request.params.id)
-        return Promise.reject({
-          message: "This CNPJ is already in use, try another.",
-        });
+  // async update(request: Request, response: Response, next: NextFunction) {
+  //   try {
+  //     let ftpToUpdate = await this.ftpRepository.findOneBy({
+  //       id: request.params.id,
+  //     });
+  //     if (!ftpToUpdate) return Promise.reject({ message: "ftp not found" });
+  //     const ftp = await this.ftpRepository.findOneBy({
+  //       cnpj: request.body.cnpj,
+  //     });
+  //     if (ftp && ftp.id !== request.params.id)
+  //       return Promise.reject({
+  //         message: "This CNPJ is already in use, try another.",
+  //       });
 
-      if (request.body.ftp?.length > 0) {
-        const ftp = AppDataSource.getRepository(FTP);
-        const objFTP = new FTP();
-        await ftp.delete({ ftpId: request.body.id });
-        for (let i = 0; i < request.body.ftp.length; i++) {
-          let bodyFTP = request.body.ftp[i];
-          objFTP.ftpId = request.body;
-          await ftp.save({ ...objFTP, ...bodyFTP });
-        }
-      }
-      delete request.body.ftp;
+  //     if (request.body.ftp?.length > 0) {
+  //       const ftp = AppDataSource.getRepository(FTP);
+  //       const objFTP = new FTP();
+  //       await ftp.delete({ ftpId: request.body.id });
+  //       for (let i = 0; i < request.body.ftp.length; i++) {
+  //         let bodyFTP = request.body.ftp[i];
+  //         objFTP.ftpId = request.body;
+  //         await ftp.save({ ...objFTP, ...bodyFTP });
+  //       }
+  //     }
+  //     delete request.body.ftp;
 
-      return this.ftpRepository.update(
-        {
-          id: request.params.id,
-        },
-        request.body
-      );
-    } catch (e) {
-      console.log(e);
-      return Promise.reject(e);
-    }
-  }
+  //     return this.ftpRepository.update(
+  //       {
+  //         id: request.params.id,
+  //       },
+  //       request.body
+  //     );
+  //   } catch (e) {
+  //     console.log(e);
+  //     return Promise.reject(e);
+  //   }
+  // }
 
   async remove(request: Request, response: Response, next: NextFunction) {
     let ftpToRemove = await this.ftpRepository.findOneBy({

@@ -9,14 +9,12 @@ export default async function Middleware(
   next: NextFunction
 ) {
   ///exclude this routes from check of token
-  if (
-    req.originalUrl === "/api/help" ||
-    req.originalUrl === "/api/manager/login"
-  )
+
+  if (req.originalUrl === "/help" || req.originalUrl === "/manager/login")
     return next();
 
   //check if the user can access the api by requester property on body
-  if (req.originalUrl === "/api/up_file_ftp") {
+  if (req.originalUrl === "/") {
     if (!req.body.requester)
       return res.status(401).send({ message: "Requester not provided" });
 
