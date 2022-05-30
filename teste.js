@@ -73,19 +73,26 @@ const MapRegex = {
 //       "Autorizau00E7u00E3oRetiradu00ECReca-padora20220318_081543.pdf"
 //     )
 //   );
+// function EncodeURI(text) {
+//   return encodeURIComponent(text); //; .replace(/%/gm, "%%");
+// }
 
-const text_emoji = "segue uD83DuDE43";
+// console.log(EncodeURI("teste de emoji \uD83D\uDE43"));
+
+const text_emoji = "segue \uD83D\uDE43";
 
 function ConvertEmoji(string) {
-  let NewString = string;
+  let NewString = "";
+  let NewString2 = "";
+  NewString = string.replace(/\\u[0-9a-fA-F]{4}/gi, function (match) {
+    return String.fromCharCode(parseInt(match.replace(/\\u/g, ""), 16));
+  });
+  NewString2 = string.replace(/[0-9a-fA-F]{4}/gi, function (match) {
+    return String.fromCharCode(parseInt(match, 16));
+  });
 
   console.log(NewString);
+  console.log(NewString2);
 }
 
 ConvertEmoji(text_emoji);
-
-function EncodeURI(text) {
-  return encodeURIComponent(text); //; .replace(/%/gm, "%%");
-}
-
-console.log(EncodeURI("teste de emoji \uD83D\uDE43"));
