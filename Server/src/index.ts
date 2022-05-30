@@ -10,7 +10,7 @@ import Middleware from "./middleware";
 import { ManagerController } from "./database/controller/ManagerController";
 import { resolve } from "path";
 
-const PORT = Config.PORT;
+const PORT = Config.PORT || 3000;
 
 AppDataSource.initialize()
   .then(async () => {
@@ -64,7 +64,7 @@ AppDataSource.initialize()
 
     await new ManagerController().FirstManager();
 
-    app.listen(PORT | 3000, () => {
+    app.listen(PORT, () => {
       console.log(
         `Express server has started on port ${PORT}. Open  http://localhost:${PORT}/ to see results`
       );
