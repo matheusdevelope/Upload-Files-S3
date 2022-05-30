@@ -14,7 +14,8 @@ export default async function Middleware(
     return next();
 
   //check if the user can access the api by requester property on body
-  if (req.originalUrl === "/") {
+  if (req.originalUrl === "/up_file_ftp") {
+    if (req.method === "GET") return next();
     if (!req.body.requester)
       return res.status(401).send({ message: "Requester not provided" });
 

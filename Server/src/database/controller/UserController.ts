@@ -12,7 +12,8 @@ export class UserController {
         message: "This CNPJ already exists",
       });
   }
-  async Auth(cnpj: string) {
+  async Auth(requester_cnpj: string) {
+    const cnpj = requester_cnpj.replace(/[^0-9]/, "") || "";
     return this.userRepository.findOneBy({ cnpj });
   }
 

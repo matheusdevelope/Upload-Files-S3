@@ -245,7 +245,7 @@ export const Routes = [
   },
   {
     method: "post",
-    route: "/",
+    route: "/up_file_ftp",
     controller: EntryPoint,
     action: "up_file_ftp",
   },
