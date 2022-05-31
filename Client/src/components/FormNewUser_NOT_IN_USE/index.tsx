@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import FormUser from "../../components/FormUser";
-import ListUser from "../../components/ListUsers";
+import FormUser from "../FormUser";
+import ListUser from "../ListUsers";
 import { IUser } from "../../types/User";
 import * as C from "./style";
-import HeaderApp from "../../components/HeaderApp";
+import HeaderApp from "../HeaderApp";
 import useUser from "../../hooks/useUser";
 import { UserLogin } from "../../context/AuthProvider";
-import AreaFTP from "../../components/AreaFTP";
+import AreaFTP from "../AreaFTP";
 import { IFTP } from "../../types/FTP";
 function FormNewUser() {
   const User = useUser();
@@ -63,14 +63,14 @@ function FormNewUser() {
 
   return (
     <C.Container>
-      <HeaderApp />
+      <HeaderApp origin="FormNewUser" title="FormNewUser" />
       <div>
         <FormUser
           handleAddUser={handleAddUser}
           handleEditUser={handleEditUser}
           UserToEdit={userToEdit}
         />
-        <AreaFTP FTPList={FTPList} setFTPList={setFTPList} />
+        <AreaFTP reset={false} FTPList={FTPList} setFTPList={setFTPList} />
       </div>
 
       <ListUser

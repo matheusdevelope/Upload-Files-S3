@@ -25,6 +25,7 @@ function FormChangeManagerCredentials() {
           const newManager: IManager = {
             id: State?.user?.id,
             user: userInput,
+            name: State?.user?.name || userInput,
             pass: passInput,
             access: State?.HolesManager.all || 0,
           };
