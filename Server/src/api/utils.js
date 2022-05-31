@@ -1,3 +1,4 @@
+const path = require("path");
 //utilities
 const MapRegex = {
   á: "u00e1",
@@ -51,6 +52,7 @@ const MapRegex = {
   "'": "u0027",
 };
 
+//utilities
 function error(e) {
   console.error("Error:", e);
   return Promise.reject(e);
@@ -78,28 +80,19 @@ function EncodeURI(text) {
 }
 function OnlyNameDescription(name, sizeHash) {
   let newName = name.split(".").shift();
-  newName = newName.substring(0, newName.length - (sizeHash + 4));
+  newName = newName.substring(0, newName.length - (sizeHash + 3));
   newName = newName.replace(/_/gm, " ");
   return newName;
 }
-function MountMessageEncoded(message, files, sizeHash, footer_message) {
-  let NewMessage = message || "";
-  NewMessage = NewMessage.replace(/\[n\]/gm, "\n");
-  if (NewMessage.length > 0) NewMessage += "\n\n";
-
-  files.forEach((obj, i) => {
-    const description =
-      obj.description_name ||
-      OnlyNameDescription(obj.name, sizeHash) ||
-      "Link " + (i + 1);
-    NewMessage += "-" + description + ":\n" + obj.url + "\n\n";
-  });
-  if (footer_message) {
-    const footer = footer_message.replace(/\[n\]/gm, "\n");
-    NewMessage += "\n" + footer;
-  }
-
-  return EncodeURI(NewMessage);
+function GenererateNameFileUnique(name_file, hash_size, expires) {
+  const name =
+    path.basename(name_file).split(".")[0] +
+    " " +
+    HashUnique(hash_size) +
+    "_" +
+    expires +
+    path.extname(name_file);
+  return name.replace(/\s/g, "_");
 }
 function Convert_Especial_Caracteres_in_Unicod_To_UTF8(value) {
   let string = value;
@@ -118,6 +111,30 @@ function Convert_Especial_Caracteres_in_Unicod_To_UTF8(value) {
   string = string.replace(/%20/gm, " ");
   return string;
 }
+function Convert_UTF16_To_Emoji(string) {
+  return string.replace(/\u[0-9a-fA-F]{4}/gi, function (match) {
+    return String.fromCharCode(parseInt(match.replace(/\u/g, ""), 16));
+  });
+}
+function MountMessageEncoded(message, files, sizeHash, footer_message) {
+  let NewMessage = message || "";
+  NewMessage = NewMessage.replace(/\[n\]/gm, "\n");
+  if (NewMessage.length > 0) NewMessage += "\n\n";
+
+  files.forEach((obj, i) => {
+    const description =
+      obj.description_name ||
+      OnlyNameDescription(obj.name, sizeHash) ||
+      "Link " + (i + 1);
+    NewMessage += "-" + description + ":\n" + obj.url + "\n\n";
+  });
+  if (footer_message) {
+    const footer = footer_message.replace(/\[n\]/gm, "\n");
+    NewMessage += "\n" + footer;
+  }
+
+  return EncodeURI(Convert_UTF16_To_Emoji(NewMessage));
+}
 module.exports = {
   round,
   HashUnique,
@@ -126,4 +143,6 @@ module.exports = {
   EncodeURI,
   OnlyNameDescription,
   Convert_Especial_Caracteres_in_Unicod_To_UTF8,
+  Convert_UTF16_To_Emoji,
+  GenererateNameFileUnique,
 };

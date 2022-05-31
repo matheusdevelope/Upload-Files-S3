@@ -5,7 +5,13 @@ const path = require("path");
 const mime = require("mime-types");
 
 const { GetConfig } = require("./config.js");
-const { Convert_Especial_Caracteres_in_Unicod_To_UTF8 } = require("./utils.js");
+const {
+  round,
+  error,
+  MountMessageEncoded,
+  Convert_Especial_Caracteres_in_Unicod_To_UTF8,
+  GenererateNameFileUnique,
+} = require("./utils.js");
 let BUCKET;
 GetConfig().then((config) => {
   BUCKET = process.env.BUCKET || config.bucket;
@@ -263,16 +269,6 @@ async function CreateListNames(files) {
   }
   return list;
 }
-function GenererateNameFileUnique(name_file, hash_size, expires) {
-  const name =
-    path.basename(name_file).split(".")[0] +
-    " " +
-    HashUnique(hash_size) +
-    "_" +
-    expires +
-    path.extname(name_file);
-  return name.replace(/\s/g, "_");
-}
 async function DownloadToLocalFromFTP(connection, files) {
   let list_of_paths_local = [];
   let erros = [];
@@ -408,58 +404,6 @@ function DeleteTempFileLocal(list_paths_files) {
       //  console.log("Deleted temp file: " + list_paths_files[i]);
     });
   }
-}
-
-//utilities
-function error(e) {
-  console.error("Error:", e);
-  return Promise.reject(e);
-}
-function HashUnique(size) {
-  let dt = new Date().getTime();
-  let base_size = "xxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxxxxx";
-  let new_size = base_size.substring(0, Number(size) < 5 ? 5 : Number(size));
-  let uuid = new_size.replace(/[xy]/g, function (c) {
-    let r = (dt + Math.random() * 16) % 16 | 0;
-    dt = Math.floor(dt / 16);
-    return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
-  });
-  return uuid;
-}
-function round(n, multiplicador) {
-  let N = n || "";
-  let value = N.toString().replace(/\D/g, "");
-  let a = Math.round(Number(value) / multiplicador) * multiplicador;
-  if (a < 5) a = 5;
-  return a;
-}
-function EncodeURI(text) {
-  return encodeURIComponent(text).replace(/%/gm, "%%");
-}
-function OnlyNameDescription(name, sizeHash) {
-  let newName = name.split(".").shift();
-  newName = newName.substring(0, newName.length - (sizeHash + 3));
-  newName = newName.replace(/_/gm, " ");
-  return newName;
-}
-function MountMessageEncoded(message, files, sizeHash, footer_message) {
-  let NewMessage = message || "";
-  NewMessage = NewMessage.replace(/\[n\]/gm, "\n");
-  if (NewMessage.length > 0) NewMessage += "\n\n";
-
-  files.forEach((obj, i) => {
-    const description =
-      obj.description_name ||
-      OnlyNameDescription(obj.name, sizeHash) ||
-      "Link " + (i + 1);
-    NewMessage += "-" + description + ":\n" + obj.url + "\n\n";
-  });
-  if (footer_message) {
-    const footer = footer_message.replace(/\[n\]/gm, "\n");
-    NewMessage += "\n" + footer;
-  }
-
-  return EncodeURI(NewMessage);
 }
 
 module.exports = {
