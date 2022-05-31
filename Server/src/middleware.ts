@@ -9,7 +9,6 @@ export default async function Middleware(
   next: NextFunction
 ) {
   ///exclude this routes from check of token
-  console.log(req.body, req.originalUrl);
   if (req.originalUrl === "/help" || req.originalUrl === "/api/manager/login")
     return next();
 
@@ -18,19 +17,15 @@ export default async function Middleware(
     if (req.method === "GET") return next();
     if (!req.body.requester)
       return res.status(401).send({ message: "Requester not provided" });
-    console.log("passou midleware 1");
     const User = await new UserController().Auth(req.body.requester);
     if (!User)
       return res
         .status(401)
         .send({ message: "The user don't have register to access API" });
-    console.log("passou midleware 2");
     if (!User.allow_access)
       return res
         .status(401)
         .send({ message: "The user cannot access resources of API" });
-
-    console.log("passou midleware 3");
     return next();
   }
 
