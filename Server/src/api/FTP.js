@@ -5,7 +5,6 @@ const { GetConfig } = require("./config.js");
 async function DeleteOnFTP(connection, fileName) {
   const client = new ftp.Client();
   try {
-    const config = await GetConfig();
     const CREDENTIAL_FTP = {
       host: connection.host_ftp,
       user: connection.user_ftp,

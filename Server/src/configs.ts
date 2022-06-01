@@ -16,6 +16,6 @@ const Config: IConfig = {
   DB_USER: process.env.DB_USER,
   DB_PASS: process.env.DB_PASS,
   PORT: Number(process.env.PORT) || 3000,
-  SECRET_JWT: "teste",
+  SECRET_JWT: process.env.SECRET_JWT || "sdijfsfnklsdiorijjipeop",
 };
 export default Config;

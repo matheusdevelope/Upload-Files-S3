@@ -93,7 +93,8 @@ async function StartProcess(req, res) {
   }
 
   retorno.requester = req.body.requester;
-  console.log("Request API: " + new Date(), retorno);
+  if (ENV.SHOW_LOG_REQUESTS === "true")
+    console.log("Request API: " + new Date(), { req: req.body, res: retorno });
   DeleteTempFileLocal(list_path_files_local);
   return retorno;
 }
