@@ -226,7 +226,6 @@ class EntryPoint {
     });
   }
   async up_file_ftp(request: Request, response: Response, next: NextFunction) {
-    console.log("ta aqui no midleware");
     return StartProcess(request, response);
   }
 }

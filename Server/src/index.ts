@@ -9,8 +9,10 @@ import Config from "./configs";
 import Middleware from "./middleware";
 import { ManagerController } from "./database/controller/ManagerController";
 import { resolve } from "path";
+import { logger } from "./logger";
+import { NewLog } from "./handler_logs";
 
-const PORT = Config.PORT || 3000;
+const PORT = Config.TEST_PORT ? Config.TEST_PORT : Config.PORT || 3000;
 
 AppDataSource.initialize()
   .then(async () => {
@@ -50,13 +52,44 @@ AppDataSource.initialize()
                   res.status(400).json(e);
                 });
             } else if (result instanceof Error) {
-              res.json({ error: result, message: "Algo Deu Errado" });
+              NewLog(
+                {
+                  requester: "system",
+                  type: "error",
+                  sector: "INDEX - Error Result",
+                  data: JSON.stringify(result),
+                },
+                "error"
+              ).finally(() => {
+                res
+                  .status(500)
+                  .json({ error: result, message: "Algo Deu Errado" });
+              });
             } else if (result !== null && result !== undefined) {
-              res.json(result);
+              NewLog(
+                {
+                  requester: "system",
+                  type: "error",
+                  sector: "INDEX - Error Result 2",
+                  data: JSON.stringify(result),
+                },
+                "error"
+              ).finally(() => {
+                res.status(500).json(result);
+              });
             }
           } catch (e) {
-            console.log(e);
-            res.status(400).json({ error: e, message: "Algo Deu Errado" });
+            NewLog(
+              {
+                requester: "system",
+                type: "error",
+                sector: "INDEX - Error On Request",
+                data: JSON.stringify(e),
+              },
+              "error"
+            ).finally(() => {
+              res.status(500).json({ error: e, message: "Algo Deu Errado" });
+            });
           }
         }
       );
@@ -65,9 +98,9 @@ AppDataSource.initialize()
     await new ManagerController().FirstManager();
 
     app.listen(PORT, () => {
-      console.log(
+      logger.info(
         `Express server has started on port ${PORT}. Open  http://localhost:${PORT}/ to see results`
       );
     });
   })
-  .catch((error) => console.log(error));
+  .catch((error) => logger.error(error));

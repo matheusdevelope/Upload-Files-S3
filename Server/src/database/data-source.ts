@@ -15,3 +15,5 @@ export const AppDataSource = new DataSource({
   migrations: ["src/database/migration/**/*.ts"],
   subscribers: [],
 });
+
+//'mysql://hvngfbnqfk2s:************@fm5gfblk33ym.us-east-2.psdb.cloud/whatsapi?ssl={"rejectUnauthorized":true}'

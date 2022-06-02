@@ -1,14 +1,21 @@
-import { ILog, LogController } from "./database/controller/LogController";
+import { LogController } from "./database/controller/LogController";
+import { logger } from "./logger";
 const log = new LogController();
-
-async function NewLog(props: ILog) {
+interface ILogHandle {
+  requester: string;
+  type: string;
+  sector: string;
+  data: any;
+}
+async function NewLog(props: ILogHandle, type?: string) {
   try {
-    props.error = JSON.stringify(props.error);
+    props.data = JSON.stringify(props.data).substring(0, 7999);
+    type === "error" ? logger.error(props) : logger.info(props);
     await log.save(props);
   } catch (e) {
-    console.log("Erro ao salvar log", e);
+    logger.error(e);
   }
-  return console.log("Fim Do Log");
+  return;
 }
 
 async function GetLogs(date: Date | undefined) {
@@ -16,9 +23,9 @@ async function GetLogs(date: Date | undefined) {
     if (date) return await log.one(date);
     return await log.all();
   } catch (e) {
-    console.log("Erro ao listar logs", e);
+    logger.error(e);
   }
-  return console.log("Fim Do Get Log");
+  return;
 }
 
-module.exports = { NewLog, GetLogs };
+export { NewLog, GetLogs };

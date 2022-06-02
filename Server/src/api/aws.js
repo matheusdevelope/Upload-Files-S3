@@ -3,6 +3,7 @@ const fs = require("fs");
 const aws = require("aws-sdk");
 const path = require("path");
 const mime = require("mime-types");
+const { NewLog } = require("../handler_logs");
 
 const { GetConfig } = require("./config.js");
 const {
@@ -24,6 +25,7 @@ GetConfig().then((config) => {
 });
 
 async function StartProcess(req, res) {
+  console.log("222222222");
   let retorno = {
     message:
       "Humm... não houveram erros de validação porém nenhum resultado foi retornado. Acho que ruim kkkkk",
@@ -89,12 +91,23 @@ async function StartProcess(req, res) {
       exceptions: "none",
     };
   } catch (e) {
-    return Promise.reject(e);
+    NewLog({
+      requester: req.body.requester,
+      type: "error",
+      sector: "AWS - Error",
+      data: e,
+    }).finally(() => {
+      return Promise.reject(e);
+    });
   }
 
   retorno.requester = req.body.requester;
-  if (ENV.SHOW_LOG_REQUESTS === "true")
-    console.log("Request API: " + new Date(), { req: req.body, res: retorno });
+  await NewLog({
+    requester: req.body.requester,
+    type: "success",
+    sector: "AWS - Finish",
+    data: { res: retorno, req: req.body },
+  });
   DeleteTempFileLocal(list_path_files_local);
   return retorno;
 }

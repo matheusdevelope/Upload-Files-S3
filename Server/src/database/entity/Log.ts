@@ -14,9 +14,9 @@ export class Log {
   @Column()
   sector: string;
 
-  @Column()
-  error: string;
+  @Column("varchar", { length: 8000 })
+  data: string;
 
-  @Column({ type: "timestamptz" })
+  @Column()
   created_at: Date;
 }

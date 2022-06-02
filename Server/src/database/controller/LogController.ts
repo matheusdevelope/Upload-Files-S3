@@ -8,7 +8,7 @@ export interface ILog {
   requester: string;
   type: string;
   sector: string;
-  error: string;
+  data: string;
   created_at?: Date;
 }
 
