@@ -3,14 +3,12 @@ import * as jwt from "jsonwebtoken";
 import Config from "./configs";
 import { UserController } from "./database/controller/UserController";
 import { NewLog } from "./handler_logs";
-import { logger } from "./logger";
 
 export default async function Middleware(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  logger.info("aquii");
   function Send401(message: any) {
     NewLog({
       requester: req.body.requester || "system",

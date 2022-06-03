@@ -14,7 +14,6 @@ const MapRegex = {
   é: "u00e9",
   è: "u00e8",
   ê: "u00ea",
-  ê: "u00ea",
   É: "u00c9",
   È: "u00c8",
   Ê: "u00ca",
@@ -54,7 +53,6 @@ const MapRegex = {
 
 //utilities
 function error(e) {
-  console.error("Error:", e);
   return Promise.reject(e);
 }
 function HashUnique(size) {
@@ -135,7 +133,7 @@ function MountMessageEncoded(message, files, sizeHash, footer_message) {
 
   return EncodeURI(Convert_UTF16_To_Emoji(NewMessage));
 }
-module.exports = {
+export {
   round,
   HashUnique,
   error,

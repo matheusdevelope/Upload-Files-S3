@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { ManagerController } from "./database/controller/ManagerController";
 import { UserController } from "./database/controller/UserController";
 import { FtpController } from "./database/controller/FTPController";
-import { StartProcess } from "./api/aws.js";
+import { StartProcess } from "./api/aws";
 const Manager = [
   {
     method: "get",

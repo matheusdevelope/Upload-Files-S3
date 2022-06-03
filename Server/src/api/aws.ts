@@ -1,20 +1,20 @@
-const FTP = require("./FTP.js");
+const FTP = require("./FTP");
 const fs = require("fs");
 const aws = require("aws-sdk");
 const path = require("path");
 const mime = require("mime-types");
 const { NewLog } = require("../handler_logs");
 
-const { GetConfig } = require("./config.js");
+import { GetConfig } from "./config";
 const {
   round,
   error,
   MountMessageEncoded,
   Convert_Especial_Caracteres_in_Unicod_To_UTF8,
   GenererateNameFileUnique,
-} = require("./utils.js");
+} = require("./utils");
 let BUCKET;
-GetConfig().then((config) => {
+GetConfig().then((config: any) => {
   BUCKET = process.env.BUCKET || config.bucket;
   const CRETENTIALS = {
     secretAccessKey: process.env.ACCESS_SECRET || config.secretAccessKey,
@@ -25,8 +25,7 @@ GetConfig().then((config) => {
 });
 
 async function StartProcess(req, res) {
-  console.log("222222222");
-  let retorno = {
+  let retorno: any = {
     message:
       "Humm... não houveram erros de validação porém nenhum resultado foi retornado. Acho que ruim kkkkk",
     data: {},
@@ -36,7 +35,7 @@ async function StartProcess(req, res) {
   try {
     await ValidateRequisition(req.body);
     const list_name_files = await CreateListNames(req.body.files);
-    if (!list_name_files | (list_name_files.length <= 0))
+    if (!list_name_files || list_name_files.length <= 0)
       return error({
         message:
           "Lista de nomes dos arquivos recebidos na requisição retornou [empty]",
@@ -45,7 +44,7 @@ async function StartProcess(req, res) {
       req.body.ftp,
       list_name_files
     );
-    if (!list_path_files_local | (list_path_files_local.length <= 0))
+    if (!list_path_files_local || list_path_files_local.length <= 0)
       return error({
         message:
           "Lista de paths dos arquivos baixados do FTP localmente retornou [empty]",
@@ -58,7 +57,7 @@ async function StartProcess(req, res) {
       round(req.body.expiration, 5) || 30,
       req.body.files
     );
-    if (!files | (files.length <= 0))
+    if (!files || files.length <= 0)
       return error({
         message: "Lista dos arquivos enviado para a nuvem retornou [empty]",
       });
@@ -420,6 +419,4 @@ function DeleteTempFileLocal(list_paths_files) {
   }
 }
 
-module.exports = {
-  StartProcess,
-};
+export { StartProcess };

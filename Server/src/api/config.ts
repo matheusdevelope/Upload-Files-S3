@@ -4,7 +4,7 @@ const os = require("os");
 
 const ENV = process.env;
 
-async function GetConfig() {
+export async function GetConfig() {
   try {
     const config = {
       port_local_server: ENV.PORT_UPLOAD_FILES_S3,
@@ -21,6 +21,3 @@ async function GetConfig() {
   }
   return false;
 }
-module.exports = {
-  GetConfig,
-};
