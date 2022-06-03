@@ -7,7 +7,7 @@
 /public/files/connections
 list_clients.json
 errors.json
-
+*.sqlite
 # testing
 /coverage
 

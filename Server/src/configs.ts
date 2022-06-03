@@ -1,6 +1,7 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 interface IConfig {
+  DB_URL: string;
   DB_PORT: number;
   DB_HOST: string;
   DB_NAME: string;
@@ -11,6 +12,7 @@ interface IConfig {
   TEST_PORT: string;
 }
 const Config: IConfig = {
+  DB_URL: process.env.DB_URL,
   DB_PORT: Number(process.env.DB_PORT),
   DB_HOST: process.env.DB_HOST,
   DB_NAME: process.env.DB_NAME,

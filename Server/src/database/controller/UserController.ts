@@ -34,9 +34,10 @@ export class UserController {
 
   async save(request: Request, response: Response, next: NextFunction) {
     try {
+      const cnpj = request.body.cnpj.replace(/[^0-9]/g, "") || "";
       await this.Exists(request.body.cnpj);
       request.body.id = UUID();
-      return this.userRepository.save(request.body);
+      return this.userRepository.save({ ...request.body, cnpj });
     } catch (e) {
       return Promise.reject(e);
     }

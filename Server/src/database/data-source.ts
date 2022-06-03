@@ -3,12 +3,15 @@ import { DataSource } from "typeorm";
 import Config from "../configs";
 
 export const AppDataSource = new DataSource({
-  type: "mssql",
-  port: Config.DB_PORT,
-  host: Config.DB_HOST,
-  username: Config.DB_USER,
-  password: Config.DB_PASS,
+  type: "sqlite",
+  //url: Config.DB_URL,
+  // port: Config.DB_PORT,
+  // host: Config.DB_HOST,
+  // username: Config.DB_USER,
+  // password: Config.DB_PASS,
   database: Config.DB_NAME,
+  //ssl: true,
+
   synchronize: true,
   logging: false,
   entities: ["src/database/entity/**/*.ts"],
