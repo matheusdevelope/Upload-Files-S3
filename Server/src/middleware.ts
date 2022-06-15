@@ -41,7 +41,7 @@ export default async function Middleware(
     return next();
   }
 
-  const authHeader: string = req.headers.authorization;
+  const authHeader = req.headers.authorization;
 
   if (!authHeader) return Send401("No Token Provided"); //res.status(401).send({ error: "No Token Provided" });
 
@@ -55,10 +55,11 @@ export default async function Middleware(
   interface IPayload {
     id: string;
   }
-  jwt.verify(token, Config.SECRET_JWT, (err, decoded: IPayload) => {
+
+  jwt.verify(token, Config.SECRET_JWT, (err, decoded: any) => {
     if (err) return Send401("Invalid Token"); //res.status(401).send({ error: "Invalid Token" });
 
-    req.userId = decoded.id;
+    //req.userId = decoded.id;
     return next();
   });
 }

@@ -1,7 +1,7 @@
 import "reflect-metadata";
-import * as express from "express";
-import * as bodyParser from "body-parser";
-import * as cors from "cors";
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 import { Request, Response } from "express";
 import { AppDataSource } from "./database/data-source";
 import { Routes } from "./routes";
@@ -20,10 +20,10 @@ AppDataSource.initialize()
     const app = express();
     app.use(bodyParser.json());
     app.use(cors());
-    app.use(express.static(resolve("../Client/public")));
+    app.use(express.static(resolve("../dist/client")));
 
-    app.get("/", (req, res) => {
-      res.sendFile(resolve("../Client/public", "index.html"));
+    app.get("/", (req: Request, res: Response) => {
+      res.sendFile(resolve("../dist/client", "index.html"));
     });
 
     app.use(Middleware);

@@ -1,21 +1,21 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import Config from "../configs";
-
+console.log(Config);
 export const AppDataSource = new DataSource({
-  type: "sqlite",
-  //url: Config.DB_URL,
+  type: "mysql",
+  url: Config.DB_URL,
   // port: Config.DB_PORT,
   // host: Config.DB_HOST,
   // username: Config.DB_USER,
   // password: Config.DB_PASS,
-  database: Config.DB_NAME,
+  //database: Config.DB_NAME || "",
   //ssl: true,
 
   synchronize: true,
   logging: false,
-  entities: ["src/database/entity/**/*.ts"],
-  migrations: ["src/database/migration/**/*.ts"],
+  entities: [__dirname + "/entity/**/*.{js,ts}"],
+  migrations: [__dirname + "/migration/**/*.{js,ts}"],
   subscribers: [],
 });
 

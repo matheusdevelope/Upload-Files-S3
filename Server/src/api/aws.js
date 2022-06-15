@@ -14,7 +14,7 @@ const {
   GenererateNameFileUnique,
 } = require("./utils");
 let BUCKET;
-GetConfig().then((config: any) => {
+GetConfig().then((config) => {
   BUCKET = process.env.BUCKET || config.bucket;
   const CRETENTIALS = {
     secretAccessKey: process.env.ACCESS_SECRET || config.secretAccessKey,
@@ -25,7 +25,7 @@ GetConfig().then((config: any) => {
 });
 
 async function StartProcess(req, res) {
-  let retorno: any = {
+  let retorno = {
     message:
       "Humm... não houveram erros de validação porém nenhum resultado foi retornado. Acho que ruim kkkkk",
     data: {},

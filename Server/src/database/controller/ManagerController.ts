@@ -27,9 +27,11 @@ export class ManagerController {
       return Promise.reject({ message: "Invalid Password" });
     }
     //return the user
-    delete Manager.pass;
+
+    let ManagerToReturn: any = { ...Manager };
+    delete ManagerToReturn.pass;
     const DataToReturn = {
-      ...Manager,
+      ...ManagerToReturn,
       token: generateToken(Manager.id),
     };
 
