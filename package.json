@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "add:dep": "cd ./Client && yarn install && cd .. && cd ./Server && yarn install",
+    "build:client": "cd ./Client && yarn build",
+    "dev:client": "cd ./Client && yarn dev",
+    "start:server": "cd ./Server && yarn start",
+    "start": "yarn build:client && cd ./Server && npx tsc && node ./dist/index.js",
+    "dev": "yarn start:server && yarn dev:client"
+  }
+}
