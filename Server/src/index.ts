@@ -20,10 +20,10 @@ AppDataSource.initialize()
     const app = express();
     app.use(bodyParser.json());
     app.use(cors());
-    app.use(express.static(resolve("../server/dist/client")));
+    app.use(express.static(resolve(__dirname, "..", "dist", "client")));
 
     app.get("/", (req: Request, res: Response) => {
-      res.sendFile(resolve("../server/dist/client", "index.html"));
+      res.sendFile(resolve(__dirname, "..", "dist", "client", "index.html"));
     });
 
     app.use(Middleware);
