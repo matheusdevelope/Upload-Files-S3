@@ -12,6 +12,7 @@ errors.json
 /coverage
 
 # production
+**.yml
 build
 public
 # misc

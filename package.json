@@ -1,10 +1,10 @@
 {
   "scripts": {
-    "add:dep": "cd ./Client && yarn install && cd .. && cd ./Server && yarn install",
-    "build:client": "cd ./Client && yarn build",
-    "dev:client": "cd ./Client && yarn dev",
-    "start:server": "cd ./Server && yarn start",
-    "start": "yarn build:client && cd ./Server && npx tsc && node ./dist/index.js",
-    "dev": "yarn start:server && yarn dev:client"
+    "add:dep": "cd ./Client && npm run install && cd .. && cd ./Server && npm run install",
+    "build:client": "cd ./Client && npm run build",
+    "dev:client": "cd ./Client && npm run dev",
+    "start:server": "cd ./Server && npm run start",
+    "start": "npm run build:client && cd ./Server && npx tsc && node ./dist/index.js",
+    "dev": "npm run start:server && npm run dev:client"
   }
 }
