@@ -3,7 +3,7 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 export const AppDataSource = new DataSource({
   type: "sqlite",
-  database: resolve(__dirname, "database.sqlite"),
+  database: resolve(__dirname, "..", "..", "sqlite3", "database.sqlite"),
   synchronize: true,
   logging: false,
   entities: [__dirname + "/entity/**/*.{js,ts}"],
