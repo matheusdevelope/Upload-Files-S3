@@ -3,6 +3,7 @@ import AuthRoute from "./components/auth/AuthRoute";
 import FormChangeManagerCredentials from "./components/FormChangePassManager";
 import Home from "./pages/home";
 import Login from "./pages/login";
+import Log from "./pages/logs";
 import Manager from "./pages/manager";
 
 export const Router = () => {
@@ -26,6 +27,14 @@ export const Router = () => {
           element={
             <AuthRoute>
               <Manager />
+            </AuthRoute>
+          }
+        />
+         <Route
+          path="/logs"
+          element={
+            <AuthRoute>
+              <Log />
             </AuthRoute>
           }
         />

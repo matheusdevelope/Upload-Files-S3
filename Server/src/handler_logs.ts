@@ -26,7 +26,7 @@ async function NewLog(props: ILogHandle, type?: string) {
 async function GetLogs(date: Date | undefined) {
   try {
     if (date) return await log.one(date);
-    return await log.all();
+    return await log.all_no_pagination();
   } catch (e) {
     logger.error(e);
   }

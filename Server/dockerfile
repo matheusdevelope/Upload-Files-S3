@@ -1,13 +1,18 @@
 FROM node:alpine
 
-WORKDIR /usr/app
+WORKDIR /app
 
 COPY package.json ./
+COPY ./.env .
+COPY ./tsconfig.json .
+COPY src src
+COPY dist dist
+
 RUN npm install
 RUN npm install pm2 -g
+RUN npx tsc 
+RUN ls -la
 
-COPY . .
-
-EXPOSE 3600
+EXPOSE 3500
 
 CMD ["pm2-runtime", "dist/index.js"]

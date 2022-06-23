@@ -90,14 +90,14 @@ async function StartProcess(req, res) {
       exceptions: "none",
     };
   } catch (e) {
+    console.log('Aqui')
     NewLog({
       requester: req.body.requester,
       type: "error",
       sector: "AWS - Error",
       data: e,
-    }).finally(() => {
-      return Promise.reject(e);
-    });
+    }).catch(e=>console.error(e))
+    Promise.reject(e);
   }
 
   retorno.requester = req.body.requester;

@@ -3,6 +3,7 @@ import { ManagerController } from "./database/controller/ManagerController";
 import { UserController } from "./database/controller/UserController";
 import { FtpController } from "./database/controller/FTPController";
 import { StartProcess } from "./api/aws";
+import { LogController } from "./database/controller/LogController";
 const Manager = [
   {
     method: "get",
@@ -104,6 +105,32 @@ const FTP = [
     controller: FtpController,
     action: "remove",
   },
+];
+const LOG = [
+  {
+    method: "post",
+    route: "/api/log/get",
+    controller: LogController,
+    action: "all",
+  },
+  {
+    method: "post",
+    route: "/api/log/new",
+    controller: LogController,
+    action: "saveLog",
+  },
+  {
+    method: "delete",
+    route: "/api/log/:id",
+    controller: LogController,
+    action: "remove",
+  },
+  // {
+  //   method: "delete",
+  //   route: "/api/log/all",
+  //   controller: LogController,
+  //   action: "removeAll",
+  // },
 ];
 class EntryPoint {
   async entry(request: Request, response: Response, next: NextFunction) {
@@ -252,4 +279,5 @@ export const Routes = [
   ...Manager,
   ...User,
   ...FTP,
+  ...LOG
 ];

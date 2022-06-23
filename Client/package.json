@@ -2,7 +2,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "d:build_client": "npm install && npm run build"
   },
   "dependencies": {
     "axios": "^0.26.1",

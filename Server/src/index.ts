@@ -104,3 +104,12 @@ AppDataSource.initialize()
     });
   })
   .catch((error) => logger.error(error));
+
+process.on('unhandledRejection', error => {
+  // Will print "unhandledRejection err is not defined"
+  console.error('unhandledRejection', error);
+});
+process.on('uncaughtException', error => {
+  // Will print "unhandledRejection err is not defined"
+  console.error('uncaughtException', error);
+});
