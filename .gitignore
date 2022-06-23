@@ -17,7 +17,7 @@ build
 public
 tmp
 temp
-dist
+
 
 # misc
 .DS_Store

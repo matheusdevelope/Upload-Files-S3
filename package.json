@@ -16,5 +16,8 @@
     "d:start": "npm run d:build  && npm run d:run  && npm run d:logs",
     "start": "npm run d:start",
     "restart": "npm run d:stop && npm run d:rm && npm rum start"
+  },
+  "dependencies": {
+    "typescript": "^4.7.4"
   }
 }
