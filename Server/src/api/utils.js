@@ -114,25 +114,33 @@ function Convert_UTF16_To_Emoji(string) {
     return String.fromCharCode(parseInt(match.replace(/\u/g, ""), 16));
   });
 }
+
 function MountMessageEncoded(message, files, sizeHash, footer_message) {
   let NewMessage = message || "";
   NewMessage = NewMessage.replace(/\[n\]/gm, "\n");
-  if (NewMessage.length > 0) NewMessage += "\n\n";
+  if (NewMessage.length > 0) NewMessage += "\n";
 
   files.forEach((obj, i) => {
     const description =
       obj.description_name ||
       OnlyNameDescription(obj.name, sizeHash) ||
-      "Link " + (i + 1);
-    NewMessage += "-" + description + ":\n" + obj.url + "\n\n";
+      "Link " + (i + 1)+':\n';
+    const description_after_link = obj.description_after_link || '';
+      if(obj.disable_auto_format === true){
+        NewMessage += description + obj.url + description_after_link;
+      }else{
+       NewMessage += "-" + description + ":\n" + obj.url + "\n\n";
+      }
   });
   if (footer_message) {
     const footer = footer_message.replace(/\[n\]/gm, "\n");
-    NewMessage += "\n" + footer;
+    NewMessage += footer;
   }
 
   return EncodeURI(Convert_UTF16_To_Emoji(NewMessage));
 }
+
+
 export {
   round,
   HashUnique,

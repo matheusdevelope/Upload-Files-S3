@@ -90,14 +90,13 @@ async function StartProcess(req, res) {
       exceptions: "none",
     };
   } catch (e) {
-    console.log('Aqui')
     NewLog({
       requester: req.body.requester,
       type: "error",
       sector: "AWS - Error",
       data: e,
     }).catch(e=>console.error(e))
-    Promise.reject(e);
+  return  Promise.reject(e);
   }
 
   retorno.requester = req.body.requester;
@@ -341,7 +340,9 @@ async function UploadFiles(list_paths_local, hash_size, expires, req_files) {
       const ret = await UpFileAWS_S3(list_paths_local[i], name_file, expires);
       const file_with_link = {
         name: ret.Key,
+        disable_auto_format: req_files[i].disable_auto_format || false,
         description_name: req_files[i].description_name || "",
+        description_after_link: req_files[i].description_after_link || "",
         url: ret.Location,
         expiration: expires,
       };

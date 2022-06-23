@@ -14,6 +14,7 @@
     "d:logs": "docker logs -f upfiless3",
     "d:stop": "docker stop upfiless3",
     "d:start": "npm run d:build  && npm run d:run  && npm run d:logs",
-    "start": "npm run d:start"
+    "start": "npm run d:start",
+    "restart": "npm run d:stop && npm run d:rm && npm rum start"
   }
 }
