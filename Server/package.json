@@ -27,6 +27,7 @@
     "pino": "^8.0.0",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^5.0.8",
+    "ts-node-dev": "^2.0.0",
     "typeorm": "^0.3.6",
     "uuid": "^8.3.2"
   },
